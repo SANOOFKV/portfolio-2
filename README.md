@@ -2,7 +2,7 @@
 
 Personal portfolio site for Sanoof Padikkal, Performance Marketer (Kerala, India).
 
-**Live:** https://sanoofkv.github.io/portfolio/
+**Live:** https://sanoofpadikkal.in
 
 ## Stack
 
