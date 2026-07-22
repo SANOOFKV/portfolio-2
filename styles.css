@@ -13,9 +13,8 @@
 @font-face{font-family:'Switzer';src:url('assets/fonts/switzer-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
 
 /* ===========================================================
-   Nithin M Warrier — portfolio recreation
-   Fonts: Trobika (display) -> Instrument Serif fallback
-          Aeonik (sans)     -> Inter fallback
+   Sanoof Padikkal — portfolio
+   Display: Zodiak · Sans: Switzer (both self-hosted above)
    =========================================================== */
 :root{
   --cream:#f7f1ed;
@@ -383,47 +382,7 @@ main{position:relative}
   text-align:center;font-size:clamp(16px,1.4vw,24px);line-height:1.3;
   margin-top:2rem;max-width:784px;opacity:0;transform:translateY(20px);letter-spacing:-.02em;
 }
-.works-grid{
-  position:relative;display:flex;flex-wrap:wrap;
-  border-top:1px solid var(--line);
-  margin:0 5%;
-}
-@media(min-width:769px){.works-grid{border-left:1px solid var(--line)}}
-.card{
-  width:100%;min-height:238px;
-  border-bottom:1px solid var(--line);
-  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
-  padding:16px 24px;position:relative;overflow:hidden;cursor:none;
-}
-@media(min-width:769px){
-  .card{width:50%;min-height:348px;border-right:1px solid var(--line)}
-}
-.card .fill{position:absolute;inset:0;background:var(--yellow);transform:translateY(101%);z-index:0}
-.card .year,.card .type,.card .logo,.card .viewbtn{position:relative;z-index:2}
-.card .year{
-  color:var(--gray);font-size:clamp(12px,1.2vw,18px);text-transform:uppercase;
-  letter-spacing:-.02em;display:inline-flex;overflow:hidden;
-}
-.card .year .ch{display:inline-block;transform:translateY(100%)}
-.card .logo{flex:1;display:flex;align-items:center;justify-content:center;width:100%}
-.card .logo .wm{
-  font-family:var(--display);text-transform:uppercase;letter-spacing:.02em;
-  font-size:clamp(26px,3.2vw,44px);color:var(--ink);
-  opacity:0;transform:scale(.8);
-}
-.card .type{
-  font-family:var(--display);text-transform:uppercase;
-  font-size:clamp(12px,1.2vw,18px);letter-spacing:-.03em;
-  display:inline-flex;overflow:hidden;flex-wrap:wrap;justify-content:center;
-}
-.card .type .ch{display:inline-block;white-space:pre;transform:translateY(100%)}
-.card .viewbtn{
-  display:none;align-items:center;gap:7px;border:1px solid var(--ink);
-  border-radius:100px;padding:5px 10px;font-size:12px;margin-top:12px;
-}
-@media(max-width:768px){.card .viewbtn{display:inline-flex}}
-.works-cross{position:absolute;z-index:10;pointer-events:none;left:50%;transform:translate(-50%,-50%)}
-@media(max-width:768px){.works-cross{display:none}}
+/* (project-card grid CSS removed — that section was replaced by Skills & Tools) */
 
 /* ===========================================================
    SKILLS & TOOLS — stamped tags
