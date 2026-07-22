@@ -93,10 +93,6 @@ canvas{display:block}
   display:flex;align-items:flex-end;justify-content:center;pointer-events:none;
 }
 .portrait-wrap svg{height:100%;width:auto}
-/* The <picture> (added for the WebP source) is the real flex item. Left inline
-   with auto height, the img's height:100% has nothing definite to resolve
-   against and collapses to its aspect ratio. */
-.portrait-wrap picture{display:block;height:100%;width:auto}
 .portrait-wrap .portrait-img{
   height:100%;width:auto;object-fit:contain;object-position:bottom;
   /* Feather the very bottom edge so the cut-out meets the ground line cleanly. */
@@ -113,7 +109,6 @@ canvas{display:block}
      clear space between the chin and the fixed Menu button. */
   .portrait-stage{width:100%;left:0;height:100vh}
   .portrait-wrap{height:78%}
-  .portrait-wrap picture{width:100%}
   .portrait-wrap .portrait-img{
     width:100%;height:100%;max-width:none;
     /* align-items:flex-end on the wrap stops the item stretching, so height:100%
