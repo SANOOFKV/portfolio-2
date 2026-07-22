@@ -176,6 +176,13 @@ main{position:relative}
   display:flex;align-items:center;justify-content:center;width:100%;
   margin-bottom:32vh;
 }
+/* Desktop: the 32vh bottom margin pushed the name high (97px above vs 385px
+   below). Padding-top plus a slightly smaller bottom margin evens that out
+   while keeping the deliberate bottom bias the rising portrait needs. */
+@media(min-width:769px){
+  .hero-title-group{padding-top:12vh;margin-bottom:26vh}
+  .hero .pill-available{top:32px}
+}
 .hero-name{white-space:nowrap;text-align:center}
 .hero-name .line{display:flex;justify-content:center}
 .hero-name .ch{
