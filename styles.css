@@ -53,6 +53,30 @@ canvas{display:block}
 /* Keeps per-character split headings from breaking mid-word when they wrap. */
 .ch-word{display:inline-flex;white-space:nowrap}
 
+/* h1 carries the hero name; strip UA defaults so it matches the old div. */
+h1.hero-name{font-size:inherit;font-weight:400;margin:0}
+
+/* ---- keyboard focus ----
+   body has cursor:none for the custom cursor, so without these there is no
+   visual indication of focus for anyone navigating by keyboard. */
+:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:3px}
+.dark-sec :focus-visible,.worked-mark:focus-visible,.menu-links a:focus-visible{
+  outline-color:var(--cream);
+}
+
+/* ---- reduced motion ----
+   The JS bails out before creating any GSAP timeline, but transitions and
+   CSS keyframes live here, so they must be neutralised too. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+  .pill-available .caret{animation:none;opacity:1}
+}
+
 /* ---- custom cursor ---- */
 .cursor{
   position:fixed;top:0;left:0;width:12px;height:12px;border-radius:50%;

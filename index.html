@@ -36,6 +36,9 @@
 <link rel="preload" href="assets/fonts/zodiak-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/switzer-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
+<!-- body{cursor:none} assumes the JS-driven custom cursor exists; without JS
+     there would be no pointer at all. -->
+<noscript><style>body{cursor:auto}.cursor{display:none}</style></noscript>
 </head>
 <body>
 
@@ -73,10 +76,10 @@
         <div class="bar"></div>
         <div class="hero-meta"><span>Performance Marketer</span></div>
       </div>
-      <div class="hero-name" id="heroName">
-        <div class="line" data-chars="SANOOF"></div>
-        <div class="line" data-chars="PADIKKAL"></div>
-      </div>
+      <h1 class="hero-name" id="heroName">
+        <span class="line" data-chars="SANOOF"></span>
+        <span class="line" data-chars="PADIKKAL"></span>
+      </h1>
       <div class="hero-lines right">
         <div class="hero-meta"><span>Kerala, India</span></div>
         <div class="bar"></div>
@@ -225,7 +228,7 @@
     <div class="fcols"><div class="col"></div><div class="col"></div><div class="col"></div><div class="col"></div><div class="col"></div></div>
     <div class="footer-inner">
       <div class="footer-hero">
-        <div class="footer-watermark">
+        <div class="footer-watermark" aria-hidden="true">
           <div class="wm-lines">
             <div class="line" data-chars="SANOOF"></div>
             <div class="line" data-chars="PADIKKAL"></div>
@@ -312,11 +315,16 @@
     if (text == null) return [];
     el.textContent = '';
     const chars = [];
+    // Per-character spans are announced letter-by-letter by many screen
+    // readers ("S… A… N…"), so expose the whole string once via aria-label
+    // and hide the individual characters.
+    el.setAttribute('aria-label', text);
     const mk = c => {
       const s = document.createElement('span');
       s.className = 'ch';
       s.textContent = c;
       s.style.whiteSpace = 'pre';
+      s.setAttribute('aria-hidden', 'true');
       chars.push(s);
       return s;
     };
@@ -340,9 +348,13 @@
     if (text == null) return [];
     el.textContent = '';
     const spans = [];
+    // Same reasoning as splitChars: announce the sentence once, hide the
+    // per-word masks so the reveal markup isn't read as fragments.
+    el.setAttribute('aria-label', text);
     text.split(' ').forEach((word, i, arr) => {
       const mask = document.createElement('span');
       mask.className = 'w';
+      mask.setAttribute('aria-hidden', 'true');
       const inner = document.createElement('span');
       inner.textContent = word;
       mask.appendChild(inner);
@@ -360,6 +372,9 @@
   document.querySelectorAll('[data-words]').forEach(splitWords);
 
   const hasGSAP = typeof window.gsap !== 'undefined';
+  // Honoured everywhere: scroll animations, smooth scroll, and the ambient
+  // canvas fields (which are motion too, and the easiest thing to forget).
+  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- custom cursor ---------- */
   const cursor = document.getElementById('cursor');
@@ -402,7 +417,7 @@
         ctx.arc(d.x, d.y, Math.max(0.3, r), 0, Math.PI * 2);
         ctx.fill();
       }
-      requestAnimationFrame(draw);
+      if (!REDUCED) requestAnimationFrame(draw);
     })();
   }
   dotField(document.getElementById('dotField'));
@@ -456,7 +471,7 @@
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fill();
       }
-      requestAnimationFrame(draw);
+      if (!REDUCED) requestAnimationFrame(draw);
     })();
   }
   particleField(document.getElementById('darkField'), { dot: 'rgba(255,232,98,0.9)', line: 'rgba(255,232,98,1)' });
@@ -492,23 +507,32 @@
       g.addColorStop(1, '#4a4a4a');
       ctx.fillStyle = g;
       ctx.fill();
-      requestAnimationFrame(draw);
+      if (!REDUCED) requestAnimationFrame(draw);
     })();
   }
   blob(document.getElementById('footerBlob'));
 
   /* ===========================================================
-     If GSAP failed to load: reveal everything and stop.
+     Put every animated element in its final, visible state. Used both when
+     GSAP is unavailable and when the visitor asked for reduced motion —
+     in either case the content must be fully readable without animation.
      =========================================================== */
-  if (!hasGSAP) {
+  function revealAll() {
     document.querySelectorAll(
       '.ch,.w span,.tag,.pill-available,.works-head p,.card .wm,.footer-credit p,.menu,.hero-meta span,.bar,.h,.guide.anim,.stamp,.ledger-line,.ledger-date-in,.ledger-company,.ledger-logo,.ledger-points li,.worked-label,.worked-mark,.worked-dot'
     ).forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
     document.getElementById('portraitStage').style.transform = 'translateY(0)';
     document.getElementById('scribble').style.clipPath = 'inset(0 0 0 0)';
     document.getElementById('menu').style.transform = 'translateX(-50%)';
+    document.querySelectorAll('.mobile-cream').forEach(el => { el.style.opacity = 0; });
+    const wipe = document.getElementById('designWipe');
+    if (wipe) wipe.style.transform = 'translateY(-100%)';
     const pt = document.querySelector('.pill-available .type');
     if (pt) pt.textContent = 'Turning ad spend into enrollments.';
+  }
+
+  if (!hasGSAP || REDUCED) {
+    revealAll();
     return;
   }
 
@@ -520,9 +544,9 @@
   // lag a frame behind and visibly jitter. Driving lenis.raf from gsap.ticker
   // keeps both on one clock; lagSmoothing(0) stops GSAP from swallowing
   // frames during heavy canvas work and desyncing the two.
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // REDUCED already returned early above, so only the availability check remains.
   let lenis = null;
-  if (window.Lenis && !prefersReduced) {
+  if (window.Lenis) {
     lenis = new Lenis({
       duration: 1.1,
       easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
