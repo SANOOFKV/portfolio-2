@@ -1,0 +1,616 @@
+/* ===========================================================
+   Self-hosted webfonts — Zodiak (display) + Switzer (sans)
+   Source: Fontshare / Indian Type Foundry, free for commercial use.
+   Self-hosted deliberately: the Fontshare CDN API intermittently returns
+   "access temporarily restricted" (HTTP 200 with a comment body), which
+   fails silently to a fallback face.
+   =========================================================== */
+@font-face{font-family:'Zodiak';src:url('assets/fonts/zodiak-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Zodiak';src:url('assets/fonts/zodiak-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Switzer';src:url('assets/fonts/switzer-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Switzer';src:url('assets/fonts/switzer-500.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Switzer';src:url('assets/fonts/switzer-600.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Switzer';src:url('assets/fonts/switzer-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+
+/* ===========================================================
+   Nithin M Warrier — portfolio recreation
+   Fonts: Trobika (display) -> Instrument Serif fallback
+          Aeonik (sans)     -> Inter fallback
+   =========================================================== */
+:root{
+  --cream:#f7f1ed;
+  --ink:#242424;
+  --yellow:#FFE862;
+  --blue:#37ACE8;
+  --line:#ACACAC;
+  --line-soft:#c4bbb4;
+  --gray:#636363;
+  /* Fontshare stand-ins: Zodiak ≈ Trobika, Switzer ≈ Aeonik.
+     Revert = put 'Instrument Serif' / 'Inter' back in front. */
+  --display:'Trobika','Zodiak','Instrument Serif',Georgia,serif;
+  --sans:'Aeonik','Switzer','Inter',system-ui,sans-serif;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+/* ---- Lenis smooth scroll (required base styles) ---- */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto !important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--sans);
+  overflow-x:clip;
+  cursor:none;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+canvas{display:block}
+
+/* Keeps per-character split headings from breaking mid-word when they wrap. */
+.ch-word{display:inline-flex;white-space:nowrap}
+
+/* ---- custom cursor ---- */
+.cursor{
+  position:fixed;top:0;left:0;width:12px;height:12px;border-radius:50%;
+  background:var(--ink);pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);mix-blend-mode:difference;
+  transition:width .35s var(--ease),height .35s var(--ease),background .35s var(--ease);
+}
+.cursor.big{width:64px;height:64px;background:#fff}
+@media(hover:none){body{cursor:auto}.cursor{display:none}}
+
+/* ---- fixed vertical guide lines ---- */
+.guide{position:fixed;top:0;bottom:0;width:1px;background:var(--line);z-index:50}
+.guide.l{left:5%}
+.guide.r{right:5%}
+.guide.anim{transform:scaleY(0);transform-origin:top}
+@media(max-width:768px){.guide.static{display:none}.guide.l.anim{left:16px}.guide.r.anim{right:16px}}
+
+/* ===========================================================
+   FIXED PORTRAIT STAGE (behind everything)
+   =========================================================== */
+.portrait-stage{
+  position:fixed;inset:0;width:100%;height:120vh;z-index:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  overflow:hidden;
+  background:linear-gradient(to bottom,var(--cream) 50%,var(--ink) 50%);
+  transform:translateY(250px);
+}
+.portrait-stage .field{position:absolute;inset:0;background:var(--yellow)}
+.portrait-stage .field canvas{position:absolute;inset:0;width:100%;height:100%}
+.scribble{
+  position:absolute;bottom:40%;z-index:1;width:70%;
+  display:flex;align-items:center;justify-content:center;pointer-events:none;
+  clip-path:inset(0 100% 0 0);
+}
+.scribble svg{width:100%;height:auto}
+.portrait-wrap{
+  position:relative;z-index:2;height:80%;
+  display:flex;align-items:flex-end;justify-content:center;pointer-events:none;
+}
+.portrait-wrap svg{height:100%;width:auto}
+/* The <picture> (added for the WebP source) is the real flex item. Left inline
+   with auto height, the img's height:100% has nothing definite to resolve
+   against and collapses to its aspect ratio. */
+.portrait-wrap picture{display:block;height:100%;width:auto}
+.portrait-wrap .portrait-img{
+  height:100%;width:auto;object-fit:contain;object-position:bottom;
+  /* Feather the very bottom edge so the cut-out meets the ground line cleanly. */
+  -webkit-mask-image:linear-gradient(to bottom,#000 96%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 96%,transparent 100%);
+}
+.mobile-cream{position:fixed;inset:0;background:var(--cream);z-index:2;pointer-events:none;display:none}
+@media(max-width:768px){
+  /* Full-width on mobile. A narrower stage clamps the square portrait via the
+     global img{max-width:100%}, which collapses its height and drops the figure
+     below the fold. Explicit width+height (not width:auto) keeps it filling. */
+  /* 100vh (not 120vh): a taller stage anchors the figure's base below the fold,
+     which pushed the head down into the stat-pill band and left only ~108px of
+     clear space between the chin and the fixed Menu button. */
+  .portrait-stage{width:100%;left:0;height:100vh}
+  .portrait-wrap{height:78%}
+  .portrait-wrap picture{width:100%}
+  .portrait-wrap .portrait-img{
+    width:100%;height:100%;max-width:none;
+    /* align-items:flex-end on the wrap stops the item stretching, so height:100%
+       falls back to the image's aspect ratio. stretch makes it fill the wrap. */
+    align-self:stretch;
+    object-fit:cover;object-position:bottom center;
+  }
+  .mobile-cream{display:block;opacity:1}
+}
+
+/* ===========================================================
+   HERO
+   =========================================================== */
+main{position:relative}
+.hero{
+  position:relative;z-index:10;height:100vh;width:100%;overflow:hidden;
+  background:var(--cream);display:flex;flex-direction:column;
+}
+.hero .grid-bg{
+  position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:
+    linear-gradient(rgba(36,36,36,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(36,36,36,.06) 1px,transparent 1px);
+  background-size:64px 64px;background-position:center;
+  -webkit-mask-image:linear-gradient(to bottom,black 0%,black 85%,transparent 85%);
+  mask-image:linear-gradient(to bottom,black 0%,black 85%,transparent 85%);
+}
+.hero .pill-available{
+  position:absolute;top:16px;left:50%;transform:translateX(-50%) scale(.8);
+  z-index:20;opacity:0;
+  background:var(--blue);color:#fff;font-size:clamp(14px,1.4vw,22px);
+  padding:12px 24px;border-radius:100px;white-space:nowrap;
+}
+/* blinking caret for the typewriter pill */
+.pill-available .caret{
+  display:inline-block;width:2px;height:.9em;background:#fff;
+  margin-left:2px;vertical-align:middle;animation:blink 1s steps(1) infinite;
+}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.hero-title-group{
+  position:relative;z-index:10;flex:1;
+  display:flex;align-items:center;justify-content:center;width:100%;
+  margin-bottom:32vh;
+}
+.hero-name{white-space:nowrap;text-align:center}
+.hero-name .line{display:flex;justify-content:center}
+.hero-name .ch{
+  font-family:var(--display);font-size:15.8vw;line-height:.92;
+  letter-spacing:-.03em;color:var(--ink);display:inline-block;white-space:pre;
+}
+.hero-name .mask{display:inline-block;overflow:hidden}
+.hero-lines{position:absolute;display:flex;align-items:center;top:50%}
+.hero-lines.left{left:5%;right:50%;margin-right:230px}
+.hero-lines.right{right:5%;left:50%;margin-left:230px}
+.hero-lines .bar{flex:1;height:1px;background:var(--line);transform:scaleX(0)}
+.hero-lines.left .bar{transform-origin:left}
+.hero-lines.right .bar{transform-origin:right;background:var(--line-soft)}
+.hero-meta{font-size:14px;color:var(--gray);white-space:nowrap;overflow:hidden}
+.hero-lines.left .hero-meta{padding-left:20px}
+.hero-lines.right .hero-meta{padding-right:20px}
+.hero-meta span{display:inline-block;transform:translateY(110%)}
+@media(max-width:768px){
+  .hero-lines{display:none}
+  .hero-title-group{margin-bottom:20vh}
+  /* 17vw, not 22vw: Zodiak is wider than the previous face and "PADIKKAL"
+     overflowed the 16px mobile guide rails, clipping its first/last letter. */
+  .hero-name .ch{font-size:17vw}
+}
+/* Zodiak runs wider than the previous stand-in face. Between 769–1000px the
+   name crowds the guide lines AND the label rail (45vw − 230px, which does not
+   scale with font-size) becomes too narrow for "Digital Marketing Executive".
+   Shrink the name and pull the rails inward so both always fit. */
+@media(min-width:769px) and (max-width:1000px){
+  .hero-name .ch{font-size:13vw}
+  .hero-lines.left{margin-right:130px}
+  .hero-lines.right{margin-left:130px}
+  .hero-meta{font-size:12px}
+}
+
+/* column transition strip */
+/* Cream curtain that retracts upward to reveal the portrait stage behind. */
+.strip{position:relative;z-index:10;display:flex;width:100%;height:200px;overflow:hidden}
+.strip .col{flex:1;height:200px;background:var(--cream);transform-origin:top center}
+
+/* ---- role pills ---- */
+.roles{position:relative;z-index:10;height:120vh}
+.roles .inner{
+  position:sticky;top:66%;transform:translateY(-50%);z-index:3;
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;padding:0 8%;pointer-events:none;
+}
+.roles .tag{
+  background:var(--ink);color:#fff;border-radius:100px;white-space:nowrap;
+  font-size:clamp(20px,2.4vw,32px);padding:8px 20px;
+  opacity:0;transform:translateY(30px);
+}
+@media(max-width:768px){
+  /* Centred at 70% the stack sat across the face — the mobile crop renders the
+     head much larger than on desktop. 86% drops it onto the chest/torso, which
+     is where the overlay reads as intended. */
+  .roles .inner{flex-direction:column;gap:14px;top:74%}
+}
+
+/* ===========================================================
+   DARK CANVAS SECTION
+   =========================================================== */
+.dark-sec{position:relative;z-index:10;height:250vh}
+.dark-sec .pin{
+  position:sticky;top:0;height:100vh;width:100%;
+  background:var(--ink);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.dark-sec canvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  -webkit-mask-image:linear-gradient(to bottom,black 0%,black 80%,transparent 100%);
+  mask-image:linear-gradient(to bottom,black 0%,black 80%,transparent 100%);
+}
+.dark-sec .dark-quote{
+  position:relative;z-index:2;max-width:70%;text-align:center;
+  font-family:var(--display);color:var(--cream);
+  font-size:clamp(28px,4vw,56px);line-height:1.15;letter-spacing:-.02em;
+}
+.dark-sec .dark-quote .w{display:inline-block;overflow:hidden;vertical-align:top}
+.dark-sec .dark-quote .w span{display:inline-block;transform:translateY(110%)}
+.dark-sec .dark-inner{position:relative;z-index:2;max-width:80%;text-align:center}
+.dark-sec .dark-quote{max-width:100%}
+/* "Where I've worked" wordmark strip inside the dark section */
+.worked-at{margin-top:clamp(28px,5vh,64px);display:flex;flex-direction:column;align-items:center;gap:14px}
+.worked-label{
+  font-family:var(--sans);text-transform:uppercase;letter-spacing:.22em;
+  font-size:clamp(10px,1vw,13px);color:rgba(247,241,237,.55);
+  opacity:0;transform:translateY(10px);
+}
+.worked-marks{display:flex;align-items:center;gap:clamp(16px,3vw,40px);flex-wrap:wrap;justify-content:center}
+.worked-mark{opacity:0;transform:translateY(14px)}
+.worked-mark .wm-text{
+  font-family:var(--display);color:var(--cream);
+  font-size:clamp(20px,3vw,40px);letter-spacing:-.02em;
+  transition:opacity .4s var(--ease);opacity:.85;
+}
+.worked-mark:hover .wm-text{opacity:1}
+/* logos ship light/colored on transparent bg → shown in natural colour on the dark strip */
+.worked-mark img{width:auto;display:block;opacity:.9;transition:opacity .4s var(--ease)}
+.worked-mark:hover img{opacity:1}
+/* Kept in proportion at every width: Brototype is a wide wordmark (3.8:1) so it
+   sits ~85% the height of AIMER's compact mark (2.8:1) to read as equal weight. */
+.worked-mark.aimer img{height:clamp(28px,3.6vw,48px)}
+.worked-mark.broto img{height:clamp(24px,3.1vw,41px)}
+.worked-dot{color:rgba(247,241,237,.4);font-size:clamp(20px,3vw,40px);opacity:0}
+@media(max-width:768px){.worked-dot{display:none}}
+
+/* dashboard placeholder in the "what I do" frame */
+.design-frame .ph-dash{
+  flex-direction:column;gap:10px;padding:0 18px;text-align:center;
+  background:linear-gradient(135deg,#242424,#3a3a3a);color:var(--cream);
+}
+.design-frame .shot .ph-metric{
+  font-family:var(--display);font-size:clamp(36px,6vw,72px);
+  letter-spacing:-.03em;line-height:1;color:var(--yellow);
+}
+.design-frame .shot .ph-sub{
+  font-family:var(--sans);font-size:clamp(11px,1.2vw,15px);
+  letter-spacing:.08em;text-transform:uppercase;color:rgba(247,241,237,.55);
+  /* splits the caption evenly instead of orphaning the last word */
+  text-wrap:balance;
+}
+
+/* ===========================================================
+   "DESIGNING EXPERIENCES" SECTION
+   =========================================================== */
+.design-sec{position:relative;z-index:10;height:450vh}
+.design-sec .pin{
+  position:sticky;top:0;height:100vh;width:100%;
+  background:var(--cream);display:flex;flex-direction:column;
+}
+.brush{position:relative;z-index:1;width:100%;height:70px;overflow:hidden}
+.brush svg{width:100%;height:100%}
+.design-row{
+  position:relative;flex:1;display:flex;align-items:center;
+  gap:5vw;padding:0 5vw;
+}
+.design-text{display:flex;flex-direction:column;align-items:flex-end;flex:1}
+.design-lead{
+  color:var(--ink);font-size:clamp(16px,1.6vw,24px);line-height:1.2;
+  display:flex;flex-wrap:wrap;justify-content:flex-end;gap:0 .25em;
+  letter-spacing:-.02em;margin-bottom:6vh;max-width:32ch;
+}
+.design-lead .w{display:inline-block;overflow:hidden}
+.design-lead .w span{display:inline-block;transform:translateY(100%);opacity:0}
+.design-big{display:flex;flex-direction:column;align-items:flex-end}
+.design-big .row{display:inline-flex;overflow:hidden;margin-bottom:.15em;padding-right:1%}
+.design-big .ch{
+  font-family:var(--display);font-size:clamp(34px,4.4vw,64px);
+  line-height:1;letter-spacing:-.03em;text-transform:uppercase;color:var(--ink);
+  display:inline-block;white-space:pre;transform:translateY(100%);opacity:0;
+}
+.design-visual{flex:1;display:flex;align-items:center;justify-content:center}
+.design-frame{
+  position:relative;overflow:hidden;border-radius:16px;
+  width:min(100%,42vw);aspect-ratio:3/2;border:1px solid #BCBCBC;cursor:none;
+}
+.design-frame .shot{width:100%;height:100%;transform:scale(1.15);transform-origin:center}
+.design-frame .shot .ph{
+  width:100%;height:100%;
+  /* Ink, not the old rust placeholder — red was the only off-palette colour on
+     the site. Sits under the yellow wipe for a high-contrast reveal. */
+  background:linear-gradient(150deg,#2b2b2b 0%,#1c1c1c 60%,#242424 100%);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--cream);font-family:var(--display);font-size:2vw;letter-spacing:.1em;
+}
+/* Covers the image until the scrub timeline slides it up (GSAP drives yPercent). */
+.design-frame .wipe{position:absolute;inset:0;background:var(--yellow)}
+.design-cursor{
+  position:absolute;top:0;left:0;z-index:10;pointer-events:none;
+  width:160px;height:160px;border-radius:50%;background:rgba(0,0,0,.7);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#fff;text-align:center;opacity:0;transform:scale(0) translate(-50%,-50%);
+}
+.design-cursor span{font-size:16px;line-height:1.2}
+@media(max-width:768px){
+  /* align-items:center is inherited from the desktop row; in this column layout
+     it shrink-wraps the children to content width, squeezing the image frame.
+     stretch lets both columns use the full width. */
+  .design-row{flex-direction:column;gap:28px;justify-content:center;align-items:stretch}
+  /* flex:1 is inherited from the desktop two-column layout; stacked, it gives
+     each block an equal half of the height and centres content inside, opening
+     a dead gap in the middle. flex:none keeps the group compact and centred. */
+  .design-text,.design-visual{flex:none}
+  .design-text{align-items:center}
+  .design-lead{justify-content:center}
+  .design-big{align-items:center}
+  .design-frame{width:calc(100% - 48px);margin:0 auto}
+  .design-frame .ph-sub{font-size:10px;letter-spacing:.04em}
+}
+
+/* ===========================================================
+   CURATED PROJECTS
+   =========================================================== */
+.works{position:relative;z-index:10;background:var(--cream);width:100%}
+.works-head{display:flex;flex-direction:column;align-items:center;padding:10vh 5% 8vh}
+.works-head h2{
+  font-family:var(--display);text-transform:uppercase;text-align:center;
+  font-size:clamp(32px,5vw,56px);line-height:1;letter-spacing:-.03em;
+}
+.works-head h2 .mask{display:inline-flex;overflow:hidden;flex-wrap:wrap;padding:0 4px}
+.works-head h2 .ch{display:inline-block;white-space:pre;transform:translateY(100%)}
+.works-head p{
+  text-align:center;font-size:clamp(16px,1.4vw,24px);line-height:1.3;
+  margin-top:2rem;max-width:784px;opacity:0;transform:translateY(20px);letter-spacing:-.02em;
+}
+.works-grid{
+  position:relative;display:flex;flex-wrap:wrap;
+  border-top:1px solid var(--line);
+  margin:0 5%;
+}
+@media(min-width:769px){.works-grid{border-left:1px solid var(--line)}}
+.card{
+  width:100%;min-height:238px;
+  border-bottom:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:16px 24px;position:relative;overflow:hidden;cursor:none;
+}
+@media(min-width:769px){
+  .card{width:50%;min-height:348px;border-right:1px solid var(--line)}
+}
+.card .fill{position:absolute;inset:0;background:var(--yellow);transform:translateY(101%);z-index:0}
+.card .year,.card .type,.card .logo,.card .viewbtn{position:relative;z-index:2}
+.card .year{
+  color:var(--gray);font-size:clamp(12px,1.2vw,18px);text-transform:uppercase;
+  letter-spacing:-.02em;display:inline-flex;overflow:hidden;
+}
+.card .year .ch{display:inline-block;transform:translateY(100%)}
+.card .logo{flex:1;display:flex;align-items:center;justify-content:center;width:100%}
+.card .logo .wm{
+  font-family:var(--display);text-transform:uppercase;letter-spacing:.02em;
+  font-size:clamp(26px,3.2vw,44px);color:var(--ink);
+  opacity:0;transform:scale(.8);
+}
+.card .type{
+  font-family:var(--display);text-transform:uppercase;
+  font-size:clamp(12px,1.2vw,18px);letter-spacing:-.03em;
+  display:inline-flex;overflow:hidden;flex-wrap:wrap;justify-content:center;
+}
+.card .type .ch{display:inline-block;white-space:pre;transform:translateY(100%)}
+.card .viewbtn{
+  display:none;align-items:center;gap:7px;border:1px solid var(--ink);
+  border-radius:100px;padding:5px 10px;font-size:12px;margin-top:12px;
+}
+@media(max-width:768px){.card .viewbtn{display:inline-flex}}
+.works-cross{position:absolute;z-index:10;pointer-events:none;left:50%;transform:translate(-50%,-50%)}
+@media(max-width:768px){.works-cross{display:none}}
+
+/* ===========================================================
+   SKILLS & TOOLS — stamped tags
+   =========================================================== */
+.tagwrap{
+  display:flex;flex-direction:column;gap:clamp(40px,6vh,72px);
+  max-width:1100px;margin:0 auto;padding:0 5%;
+}
+.taggroup{display:flex;flex-direction:column;gap:20px}
+.taggroup-label{
+  font-family:var(--display);text-transform:uppercase;letter-spacing:-.02em;
+  font-size:clamp(20px,2.4vw,32px);color:var(--ink);
+  display:inline-flex;overflow:hidden;flex-wrap:wrap;
+}
+.taggroup-label .ch{display:inline-block;white-space:pre;transform:translateY(100%)}
+.tags{display:flex;flex-wrap:wrap;gap:12px}
+.stamp{
+  font-family:var(--sans);font-size:clamp(13px,1.3vw,18px);letter-spacing:-.01em;
+  color:var(--ink);border:1px solid var(--ink);border-radius:100px;
+  padding:9px 18px;white-space:nowrap;background:transparent;
+  opacity:0;transform:scale(.6) rotate(-6deg);transform-origin:center;
+  transition:background .3s var(--ease),color .3s var(--ease);cursor:none;
+}
+.stamp:hover{background:var(--ink);color:var(--cream)}
+/* subtle "stamped" resting rotation, alternating */
+.stamp:nth-child(3n+1){--rest:-1.5deg}
+.stamp:nth-child(3n+2){--rest:1deg}
+.stamp:nth-child(3n){--rest:-.5deg}
+
+/* ===========================================================
+   EXPERIENCE LEDGER
+   =========================================================== */
+.ledger{position:relative;z-index:10;background:var(--cream);width:100%}
+.ledger-list{max-width:1100px;margin:0 auto;padding:0 5%;display:flex;flex-direction:column}
+.ledger-row{
+  position:relative;display:grid;grid-template-columns:1fr;gap:16px;
+  padding:clamp(32px,5vh,64px) 0 clamp(32px,5vh,64px) 28px;
+  border-top:1px solid var(--line);
+}
+.ledger-row:last-child{border-bottom:1px solid var(--line)}
+@media(min-width:769px){
+  .ledger-row{grid-template-columns:280px 1fr;gap:40px;padding-left:32px}
+}
+/* the vertical accent line that draws in */
+.ledger-line{
+  position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--ink);
+  transform:scaleY(0);transform-origin:top;
+}
+.ledger-date{display:flex;overflow:hidden;align-items:flex-start}
+.ledger-date-in{
+  font-family:var(--sans);font-size:clamp(14px,1.4vw,20px);letter-spacing:-.01em;
+  color:var(--gray);white-space:nowrap;display:inline-block;transform:translateY(110%);
+}
+.ledger-body{display:flex;flex-direction:column;gap:6px}
+.ledger-role{
+  font-family:var(--display);text-transform:uppercase;letter-spacing:-.02em;
+  font-size:clamp(24px,3.4vw,44px);line-height:1;color:var(--ink);
+  display:inline-flex;overflow:hidden;flex-wrap:wrap;
+}
+.ledger-role .ch{display:inline-block;white-space:pre;transform:translateY(100%)}
+.ledger-company{
+  font-family:var(--sans);font-weight:600;font-size:clamp(15px,1.5vw,22px);
+  color:var(--ink);opacity:0;transform:translateY(12px);
+}
+.ledger-logo{height:clamp(22px,2.6vw,34px);width:auto;opacity:0;transform:translateY(12px)}
+.ledger-points{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:7px}
+.ledger-points li{
+  position:relative;padding-left:18px;font-family:var(--sans);
+  font-size:clamp(14px,1.35vw,18px);line-height:1.35;color:var(--gray);
+  opacity:0;transform:translateY(10px);
+}
+.ledger-points li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:1px;background:var(--gray)}
+
+/* ===========================================================
+   FOOTER
+   =========================================================== */
+.footer{
+  position:relative;z-index:10;min-height:100vh;overflow:hidden;
+  background:var(--yellow);display:flex;flex-direction:column;
+}
+.footer .blob-field{position:absolute;inset:0;transform:translateY(-30%)}
+.footer .blob-field canvas{position:absolute;inset:0;width:100%;height:100%}
+.footer .fcols{
+  position:absolute;top:0;left:0;z-index:10;display:flex;width:100%;height:340px;
+  overflow:hidden;pointer-events:none;
+}
+.footer .fcols .col{flex:1;height:340px;background:var(--cream);transform-origin:top center}
+.footer-inner{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;padding:0 5%}
+.footer-hero{position:relative;flex:1;display:flex;align-items:center;justify-content:center}
+.footer-watermark{
+  position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;
+  opacity:.18;pointer-events:none;
+}
+.footer-watermark .wm-lines{width:85%}
+.footer-watermark .line{display:flex;justify-content:center;width:max-content;margin:0 auto}
+.footer-watermark .ch{
+  font-family:var(--display);font-size:clamp(90px,15vw,150px);line-height:1;
+  letter-spacing:-.03em;color:var(--ink);white-space:pre;
+}
+.footer-blob{position:relative;z-index:5;width:clamp(259px,32vw,560px);height:clamp(285px,45vh,760px)}
+.footer-blob canvas{width:100%;height:100%}
+.footer-divider{position:relative;z-index:3;display:flex;width:100%;height:1px}
+.footer-divider .h{width:50%;height:1px;background:var(--line);transform:scaleX(0)}
+.footer-divider .h.l{transform-origin:left}
+.footer-divider .h.r{transform-origin:right}
+.footer-cta{
+  position:relative;z-index:3;padding:clamp(16px,3vh,56px) 0;
+  display:flex;flex-direction:column;gap:2rem;
+}
+@media(min-width:769px){.footer-cta{flex-direction:row;align-items:flex-end;justify-content:space-between}}
+.footer-cta .lead{
+  font-size:clamp(16px,2vw,48px);letter-spacing:-.03em;line-height:1.2;color:var(--ink);
+}
+.footer-cta .lead .mask{display:inline-flex;overflow:hidden}
+.footer-cta .lead .ch{display:inline-block;white-space:pre;transform:translateY(110%)}
+.footer-cta .big{
+  font-family:var(--display);text-transform:uppercase;color:var(--ink);
+  font-size:clamp(32px,3.8vw,88px);letter-spacing:-.03em;line-height:1;margin-top:9px;
+}
+.footer-cta .big .mask{display:flex;overflow:hidden}
+.footer-cta .big .ch{display:inline-block;white-space:pre;transform:translateY(110%)}
+.footer-reach{display:flex;flex-direction:column;align-items:flex-start}
+@media(min-width:769px){.footer-reach{align-items:flex-end}}
+.footer-reach .reach-label{
+  font-size:clamp(18px,1.25vw,24px);letter-spacing:-.03em;color:var(--ink);
+  margin-bottom:20px;display:inline-flex;overflow:hidden;
+}
+.footer-reach .reach-label .ch{display:inline-block;transform:translateY(110%)}
+.socials{display:flex;gap:20px;align-items:center}
+.socials .ico{cursor:none}
+.socials .ico svg{width:44px;height:44px;stroke:var(--ink)}
+.ig-body,.ig-lens,.ig-dot{transform-origin:50% 50%;transition:transform .5s var(--ease)}
+.socials .ico:hover .ig-lens{transform:rotate(90deg) scale(.85)}
+.socials .ico:hover .ig-body{transform:rotate(-6deg)}
+.li .lines{stroke-dasharray:1 1;stroke-dashoffset:1;transition:stroke-dashoffset .6s var(--ease)}
+.socials .li:hover .lines{stroke-dashoffset:0}
+/* Touch devices never fire :hover, so the LinkedIn glyph would stay an empty
+   square. Draw the strokes by default where hover isn't available. */
+@media(hover:none){
+  .li .lines{stroke-dashoffset:0}
+}
+.li .border{transform-origin:center;transition:transform .5s var(--ease)}
+.socials .li:hover .border{transform:scale(.92)}
+/* email hover expand */
+.email-hover{display:flex;align-items:center;gap:4px;color:var(--ink);cursor:none;overflow:hidden}
+.email-hover .txt{
+  font-size:clamp(18px,2vw,40px);letter-spacing:-.03em;line-height:1.3;color:var(--ink);
+  white-space:nowrap;max-width:0;opacity:0;overflow:hidden;
+  transition:max-width .8s var(--ease),opacity .5s var(--ease);
+}
+.email-hover .at{width:44px;height:44px;flex:none}
+.email-hover .at svg{width:100%;height:100%;stroke:var(--ink)}
+.email-hover:hover .txt{max-width:13ch;opacity:1}
+.footer-credit{
+  display:flex;width:100%;margin-top:clamp(20px,6vh,120px);opacity:.6;padding:0 24px;
+}
+.footer-credit p{
+  flex:1;font-size:clamp(12px,1.2vw,24px);letter-spacing:-.03em;line-height:1;color:var(--ink);
+  opacity:0;transform:translateY(8px);
+}
+.footer-credit p.r{text-align:right}
+.footer-credit b{font-weight:700}
+
+/* ===========================================================
+   FLOATING MENU
+   =========================================================== */
+.menu{
+  position:fixed;bottom:40px;left:50%;transform:translateX(-50%) translateY(20px);
+  z-index:100;opacity:0;
+}
+.menu-pill{
+  position:relative;overflow:hidden;display:flex;flex-direction:column;
+  border:1px solid var(--ink);border-radius:24px;background:var(--cream);
+  letter-spacing:-.02em;cursor:none;padding:14px 22px;min-width:180px;
+}
+.menu-fill{
+  position:absolute;left:50%;bottom:0;width:200%;height:200%;
+  background:var(--ink);border-radius:50%;transform:translateX(-50%) translateY(100%);
+  transition:transform .6s var(--ease);z-index:0;
+}
+.menu.open .menu-fill{transform:translateX(-50%) translateY(28%)}
+.menu-links{
+  position:relative;z-index:2;display:flex;flex-direction:column;gap:16px;
+  align-items:center;overflow:hidden;max-height:0;opacity:0;
+  transition:max-height .6s var(--ease),opacity .4s var(--ease),margin .6s var(--ease);
+}
+.menu.open .menu-links{max-height:200px;opacity:1;margin-bottom:14px}
+.menu-links a{
+  font-family:var(--display);text-transform:uppercase;color:var(--cream);
+  font-size:24px;letter-spacing:-.03em;line-height:1;height:1em;overflow:hidden;position:relative;
+}
+.menu-links a .flip{display:flex;flex-direction:column;transition:transform .4s var(--ease)}
+.menu-links a .flip span{height:1em;line-height:1em;display:block}
+.menu-links a:hover .flip{transform:translateY(-1em)}
+.menu-bar{
+  position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;
+  cursor:none;
+}
+.menu-bar .lbl{font-size:20px;line-height:1;transition:color .4s var(--ease)}
+.menu.open .menu-bar .lbl{color:var(--cream)}
+.menu-bar .burger{position:relative;width:24px;height:24px}
+.menu-bar .burger span{
+  position:absolute;left:3px;top:11px;width:18px;height:2px;border-radius:2px;
+  background:var(--ink);transition:transform .4s var(--ease),background .4s var(--ease);
+}
+.menu-bar .burger span:nth-child(2){transform:translateY(4px)}
+.menu.open .menu-bar .burger span{background:var(--cream)}
+.menu.open .menu-bar .burger span:nth-child(1){transform:translateY(4px) rotate(45deg)}
+.menu.open .menu-bar .burger span:nth-child(2){transform:translateY(4px) rotate(-45deg)}

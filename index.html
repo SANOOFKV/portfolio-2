@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sanoof Padikkal — Portfolio</title>
+<meta name="description" content="Sanoof Padikkal — Performance Marketer. Paid performance marketing for education brands: Meta &amp; Google Ads, funnels, and CRO.">
+
+<!-- ICONS -->
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#f7f1ed">
+
+<!-- SOCIAL SHARE (Open Graph + Twitter).
+     og:url / og:image MUST stay absolute — LinkedIn, WhatsApp and Facebook fetch
+     this page from their own servers and cannot resolve relative paths.
+     If the site moves to a custom domain, update all four URLs below. -->
+<link rel="canonical" href="https://sanoofkv.github.io/portfolio/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sanoof Padikkal">
+<meta property="og:url" content="https://sanoofkv.github.io/portfolio/">
+<meta property="og:title" content="Sanoof Padikkal — Performance Marketer">
+<meta property="og:description" content="Paid performance for education brands. ₹1Cr+ ad spend managed at 6× average ROAS.">
+<meta property="og:image" content="https://sanoofkv.github.io/portfolio/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sanoof Padikkal — Performance Marketer, Kerala, India">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sanoof Padikkal — Performance Marketer">
+<meta name="twitter:description" content="Paid performance for education brands. ₹1Cr+ ad spend managed at 6× average ROAS.">
+<meta name="twitter:image" content="https://sanoofkv.github.io/portfolio/assets/og.png">
+
+<!-- FONTS: self-hosted Zodiak + Switzer (@font-face lives in styles.css).
+     No third-party font CDN — nothing external to rate-limit or block.
+     Preloading the two above-the-fold faces to avoid a flash of fallback text. -->
+<link rel="preload" href="assets/fonts/zodiak-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/switzer-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- custom cursor -->
+<div class="cursor" id="cursor"></div>
+
+<!-- fixed guide lines -->
+<div class="guide l static"></div>
+<div class="guide r static"></div>
+<div class="guide l anim"></div>
+<div class="guide r anim"></div>
+
+<!-- ===================== FIXED PORTRAIT STAGE ===================== -->
+<section class="portrait-stage" id="portraitStage">
+  <div class="field"><canvas id="dotField"></canvas></div>
+  <div class="scribble" id="scribble">
+    <svg viewBox="0 0 900 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M40 180C180 60 360 40 520 90c90 28 200 70 250 20 40-40-30-90-90-70-70 24-60 120 20 150 70 26 180 10 230-30"
+        stroke="#242424" stroke-width="14" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="portrait-wrap">
+    <picture>
+      <source srcset="assets/portrait.webp" type="image/webp">
+      <img src="assets/portrait.png" alt="Portrait" class="portrait-img">
+    </picture>
+  </div>
+</section>
+<div class="mobile-cream"></div>
+
+<main>
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="grid-bg"></div>
+    <div class="pill-available" id="pillAvailable"><span class="type"></span><span class="caret"></span></div>
+    <div class="hero-title-group">
+      <div class="hero-lines left">
+        <div class="bar"></div>
+        <div class="hero-meta"><span>Performance Marketer</span></div>
+      </div>
+      <div class="hero-name" id="heroName">
+        <div class="line" data-chars="SANOOF"></div>
+        <div class="line" data-chars="PADIKKAL"></div>
+      </div>
+      <div class="hero-lines right">
+        <div class="hero-meta"><span>Kerala, India</span></div>
+        <div class="bar"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- column transition -->
+  <div class="strip"><div class="col"></div><div class="col"></div><div class="col"></div><div class="col"></div><div class="col"></div></div>
+
+  <!-- ===================== ROLE PILLS ===================== -->
+  <section class="roles">
+    <div class="inner">
+      <span class="tag">₹1Cr+ ad spend</span>
+      <span class="tag">6× avg ROAS</span>
+      <span class="tag">1.6+ yrs experience</span>
+    </div>
+  </section>
+
+  <!-- ===================== DARK CANVAS SECTION ===================== -->
+  <section class="dark-sec">
+    <div class="pin">
+      <canvas id="darkField"></canvas>
+      <div class="dark-inner">
+        <p class="dark-quote" data-words="End-to-end paid performance for education brands."></p>
+        <div class="worked-at">
+          <span class="worked-label">Where I've worked</span>
+          <div class="worked-marks">
+            <a class="worked-mark aimer" href="#exp" aria-label="AIMER Business School"><img src="assets/aimer.svg" alt="AIMER Business School"></a>
+            <span class="worked-dot">·</span>
+            <a class="worked-mark broto" href="#exp" aria-label="Brototype"><img src="assets/brototype.png" alt="Brototype"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DESIGNING EXPERIENCES ===================== -->
+  <section class="design-sec">
+    <div class="pin">
+      <div class="brush">
+        <svg viewBox="0 0 1200 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 40 C200 10 380 60 600 38 C820 16 1000 58 1200 30 L1200 70 L0 70 Z" fill="#242424"/>
+        </svg>
+      </div>
+      <div class="design-row">
+        <div class="design-text">
+          <p class="design-lead" data-words="Turning ad spend into results through"></p>
+          <div class="design-big">
+            <div class="row" data-chars="Paid Media"></div>
+            <div class="row" data-chars="Sales Funnels"></div>
+            <div class="row" data-chars="Conversion"></div>
+          </div>
+        </div>
+        <div class="design-visual">
+          <div class="design-frame" id="designFrame">
+            <div class="shot"><div class="ph ph-dash">
+              <span class="ph-metric">6× ROAS</span>
+              <span class="ph-sub">Campaign performance · GA4 + Ads Manager</span>
+            </div></div>
+            <div class="wipe" id="designWipe"></div>
+            <div class="design-cursor" id="designCursor">
+              <span>See the<br>numbers</span>
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M16 15l-4 4M8 15l4 4"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SKILLS & TOOLS ===================== -->
+  <section class="works" id="skills">
+    <div class="works-head">
+      <h2><span class="mask" data-chars="Skills"></span> <span class="mask" data-chars="&amp; Tools"></span></h2>
+      <p>The stack behind every campaign — from strategy and paid media to the platforms that run them.</p>
+    </div>
+    <div class="tagwrap">
+      <div class="taggroup">
+        <span class="taggroup-label" data-chars="Core Skills"></span>
+        <div class="tags">
+          <span class="stamp">Meta Ads</span><span class="stamp">Google Ads</span><span class="stamp">Snapchat Ads</span>
+          <span class="stamp">SEO</span><span class="stamp">CRM Automation</span><span class="stamp">Sales Funnels</span>
+          <span class="stamp">Landing Page Design</span><span class="stamp">CRO</span><span class="stamp">Content Strategy</span>
+          <span class="stamp">Google Business Profile</span><span class="stamp">WordPress Development</span>
+          <span class="stamp">Offline Marketing</span><span class="stamp">Campaign Analytics</span>
+        </div>
+      </div>
+      <div class="taggroup">
+        <span class="taggroup-label" data-chars="Tools"></span>
+        <div class="tags">
+          <span class="stamp">Meta Ads Manager</span><span class="stamp">Google Ads</span><span class="stamp">Snapchat Ads Manager</span>
+          <span class="stamp">GA4</span><span class="stamp">WordPress</span><span class="stamp">CRM Tools</span>
+          <span class="stamp">Google Sheets</span><span class="stamp">Voxbay</span><span class="stamp">Canva</span>
+        </div>
+      </div>
+    </div>
+    <div style="height:10vh"></div>
+  </section>
+
+  <!-- ===================== EXPERIENCE LEDGER ===================== -->
+  <section class="ledger" id="exp">
+    <div class="works-head">
+      <h2><span class="mask" data-chars="Experience"></span></h2>
+    </div>
+    <div class="ledger-list">
+      <article class="ledger-row">
+        <div class="ledger-line"></div>
+        <div class="ledger-date"><span class="ledger-date-in">May 2026 — Present</span></div>
+        <div class="ledger-body">
+          <h3 class="ledger-role" data-chars="Digital Marketing Executive"></h3>
+          <!-- Company shown as text here by design: the supplied logos are light
+               artwork for dark backgrounds and would vanish on this cream panel.
+               A dark/full-colour logo variant could use .ledger-logo instead. -->
+          <p class="ledger-company">AIMER Business School</p>
+          <ul class="ledger-points">
+            <li>Owns Meta &amp; Google Ads strategy end-to-end</li>
+            <li>SEO, WordPress and Google Business Profile management</li>
+            <li>Landing page testing &amp; iteration</li>
+            <li>Offline marketing support</li>
+          </ul>
+        </div>
+      </article>
+      <article class="ledger-row">
+        <div class="ledger-line"></div>
+        <div class="ledger-date"><span class="ledger-date-in">Feb 2025 — Apr 2026</span></div>
+        <div class="ledger-body">
+          <h3 class="ledger-role" data-chars="Digital Marketing Executive"></h3>
+          <!-- Text by design — see note on the AIMER row above. -->
+          <p class="ledger-company">Brototype</p>
+          <ul class="ledger-points">
+            <li>Managed ₹1Cr+ ad spend at 6× ROAS</li>
+            <li>Drove 40%+ follower growth</li>
+            <li>CAC reporting &amp; performance tracking</li>
+            <li>Offline visibility campaigns (hoardings)</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+    <div style="height:10vh"></div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <section class="footer" id="footer">
+    <div class="blob-field"><canvas id="footerBg"></canvas></div>
+    <div class="fcols"><div class="col"></div><div class="col"></div><div class="col"></div><div class="col"></div><div class="col"></div></div>
+    <div class="footer-inner">
+      <div class="footer-hero">
+        <div class="footer-watermark">
+          <div class="wm-lines">
+            <div class="line" data-chars="SANOOF"></div>
+            <div class="line" data-chars="PADIKKAL"></div>
+          </div>
+        </div>
+        <div class="footer-blob"><canvas id="footerBlob"></canvas></div>
+      </div>
+      <div class="footer-divider"><div class="h l"></div><div class="h r"></div></div>
+      <div class="footer-cta">
+        <div>
+          <div class="lead"><span class="mask" data-chars="Let's turn ad spend"></span></div>
+          <div class="big">
+            <span class="mask" data-chars="into real"></span>
+            <span class="mask" data-chars="results"></span>
+          </div>
+        </div>
+        <div class="footer-reach">
+          <div class="reach-label" data-chars="Reach out"></div>
+          <div class="socials">
+            <a class="ico" href="https://www.instagram.com/sanoofpadikkal" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path class="ig-body" d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"/>
+                <path class="ig-lens" d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>
+                <path class="ig-dot" d="M16.5 7.5v.01"/>
+              </svg>
+            </a>
+            <a class="ico li" href="https://www.linkedin.com/in/sanoof-padikkal" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path class="lines" d="M8 11v5" pathLength="1"/>
+                <path class="lines" d="M8 8v.01" pathLength="1"/>
+                <path class="lines" d="M12 16v-5" pathLength="1"/>
+                <path class="lines" d="M16 16v-3a2 2 0 1 0 -4 0" pathLength="1"/>
+                <path class="border" d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z"/>
+              </svg>
+            </a>
+            <a class="email-hover" href="mailto:kvspadikkal2@gmail.com" aria-label="Email">
+              <span class="txt">kvspadikkal2</span>
+              <span class="at"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></svg></span>
+              <span class="txt">gmail.com</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-credit">
+        <p>Performance Marketer · <b>Kerala, India</b></p>
+        <p class="r">Available for <b>new opportunities</b></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- floating menu -->
+<div class="menu" id="menu">
+  <div class="menu-pill">
+    <div class="menu-fill"></div>
+    <div class="menu-links">
+      <a href="#"><span class="flip"><span>Home</span><span>Home</span></span></a>
+      <a href="#skills"><span class="flip"><span>Skills</span><span>Skills</span></span></a>
+      <a href="#exp"><span class="flip"><span>Experience</span><span>Experience</span></span></a>
+      <a href="#footer"><span class="flip"><span>Contact</span><span>Contact</span></span></a>
+    </div>
+    <div class="menu-bar" id="menuBar">
+      <span class="lbl">Menu</span>
+      <span class="burger"><span></span><span></span></span>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+/* ===========================================================
+   Nithin M Warrier — portfolio recreation
+   Animations powered by GSAP + ScrollTrigger.
+   Falls back gracefully to static content if GSAP is missing.
+   =========================================================== */
+(function () {
+  'use strict';
+
+  /* ---------- text splitting helpers ---------- */
+  function splitChars(el) {
+    const text = el.getAttribute('data-chars');
+    if (text == null) return [];
+    el.textContent = '';
+    const chars = [];
+    const mk = c => {
+      const s = document.createElement('span');
+      s.className = 'ch';
+      s.textContent = c;
+      s.style.whiteSpace = 'pre';
+      chars.push(s);
+      return s;
+    };
+    // Group each word in a nowrap wrapper. Without this, every character is its
+    // own inline-block and the line can break mid-word ("EX / ECUTIVE").
+    text.split(/(\s+)/).forEach(part => {
+      if (!part) return;
+      if (/^\s+$/.test(part)) {
+        for (const c of part) el.appendChild(mk(c));
+      } else {
+        const word = document.createElement('span');
+        word.className = 'ch-word';
+        for (const c of part) word.appendChild(mk(c));
+        el.appendChild(word);
+      }
+    });
+    return chars;
+  }
+  function splitWords(el) {
+    const text = el.getAttribute('data-words');
+    if (text == null) return [];
+    el.textContent = '';
+    const spans = [];
+    text.split(' ').forEach((word, i, arr) => {
+      const mask = document.createElement('span');
+      mask.className = 'w';
+      const inner = document.createElement('span');
+      inner.textContent = word;
+      mask.appendChild(inner);
+      el.appendChild(mask);
+      // Space as a separate text node OUTSIDE the overflow-hidden mask so it
+      // isn't trimmed. In flex containers whitespace-only nodes are ignored.
+      if (i < arr.length - 1) el.appendChild(document.createTextNode(' '));
+      spans.push(inner);
+    });
+    return spans;
+  }
+
+  // Build all split text up front so layout is correct.
+  document.querySelectorAll('[data-chars]').forEach(splitChars);
+  document.querySelectorAll('[data-words]').forEach(splitWords);
+
+  const hasGSAP = typeof window.gsap !== 'undefined';
+
+  /* ---------- custom cursor ---------- */
+  const cursor = document.getElementById('cursor');
+  let cx = window.innerWidth / 2, cy = window.innerHeight / 2, tx = cx, ty = cy;
+  window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+  (function loop() {
+    cx += (tx - cx) * 0.18; cy += (ty - cy) * 0.18;
+    cursor.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('a, .card, .menu-bar, .ico, .email-hover').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+  });
+
+  /* ---------- canvas: dot field (portrait stage) ---------- */
+  function dotField(canvas) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, dots = [];
+    function resize() {
+      w = canvas.width = canvas.offsetWidth * devicePixelRatio;
+      h = canvas.height = canvas.offsetHeight * devicePixelRatio;
+      const gap = 34 * devicePixelRatio;
+      dots = [];
+      for (let x = gap; x < w; x += gap)
+        for (let y = gap; y < h; y += gap)
+          dots.push({ x, y, ph: Math.random() * Math.PI * 2 });
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    let t = 0;
+    (function draw() {
+      ctx.clearRect(0, 0, w, h);
+      t += 0.02;
+      ctx.fillStyle = 'rgba(36,36,36,0.28)';
+      for (const d of dots) {
+        const r = (1.2 + Math.sin(t + d.ph) * 1) * devicePixelRatio;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, Math.max(0.3, r), 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    })();
+  }
+  dotField(document.getElementById('dotField'));
+
+  /* ---------- canvas: particle field (dark + footer bg) ---------- */
+  function particleField(canvas, color) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, parts = [];
+    function resize() {
+      w = canvas.width = canvas.offsetWidth * devicePixelRatio;
+      h = canvas.height = canvas.offsetHeight * devicePixelRatio;
+      const count = Math.min(120, Math.floor((w * h) / (30000 * devicePixelRatio)));
+      parts = [];
+      for (let i = 0; i < count; i++)
+        parts.push({
+          x: Math.random() * w, y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.3 * devicePixelRatio,
+          vy: (Math.random() - 0.5) * 0.3 * devicePixelRatio,
+          r: (Math.random() * 1.6 + 0.4) * devicePixelRatio
+        });
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    (function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of parts) {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+      }
+      ctx.strokeStyle = color.line;
+      for (let i = 0; i < parts.length; i++) {
+        for (let j = i + 1; j < parts.length; j++) {
+          const dx = parts[i].x - parts[j].x, dy = parts[i].y - parts[j].y;
+          const dist = Math.hypot(dx, dy);
+          const max = 130 * devicePixelRatio;
+          if (dist < max) {
+            ctx.globalAlpha = (1 - dist / max) * 0.4;
+            ctx.beginPath();
+            ctx.moveTo(parts[i].x, parts[i].y);
+            ctx.lineTo(parts[j].x, parts[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = color.dot;
+      for (const p of parts) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    })();
+  }
+  particleField(document.getElementById('darkField'), { dot: 'rgba(255,232,98,0.9)', line: 'rgba(255,232,98,1)' });
+  particleField(document.getElementById('footerBg'), { dot: 'rgba(36,36,36,0.5)', line: 'rgba(36,36,36,1)' });
+
+  /* ---------- canvas: footer morphing blob ---------- */
+  function blob(canvas) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    function resize() {
+      w = canvas.width = canvas.offsetWidth * devicePixelRatio;
+      h = canvas.height = canvas.offsetHeight * devicePixelRatio;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    let t = 0;
+    (function draw() {
+      ctx.clearRect(0, 0, w, h);
+      t += 0.012;
+      const cxp = w / 2, cyp = h / 2;
+      const base = Math.min(w, h) * 0.32;
+      ctx.beginPath();
+      for (let a = 0; a <= Math.PI * 2 + 0.01; a += 0.05) {
+        const r = base * (1 + 0.18 * Math.sin(a * 3 + t) + 0.12 * Math.sin(a * 5 - t * 1.3));
+        const x = cxp + Math.cos(a) * r;
+        const y = cyp + Math.sin(a) * r;
+        a === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      const g = ctx.createLinearGradient(0, 0, w, h);
+      g.addColorStop(0, '#242424');
+      g.addColorStop(1, '#4a4a4a');
+      ctx.fillStyle = g;
+      ctx.fill();
+      requestAnimationFrame(draw);
+    })();
+  }
+  blob(document.getElementById('footerBlob'));
+
+  /* ===========================================================
+     If GSAP failed to load: reveal everything and stop.
+     =========================================================== */
+  if (!hasGSAP) {
+    document.querySelectorAll(
+      '.ch,.w span,.tag,.pill-available,.works-head p,.card .wm,.footer-credit p,.menu,.hero-meta span,.bar,.h,.guide.anim,.stamp,.ledger-line,.ledger-date-in,.ledger-company,.ledger-logo,.ledger-points li,.worked-label,.worked-mark,.worked-dot'
+    ).forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+    document.getElementById('portraitStage').style.transform = 'translateY(0)';
+    document.getElementById('scribble').style.clipPath = 'inset(0 0 0 0)';
+    document.getElementById('menu').style.transform = 'translateX(-50%)';
+    const pt = document.querySelector('.pill-available .type');
+    if (pt) pt.textContent = 'Turning ad spend into enrollments.';
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------- smooth scroll (Lenis) ---------- */
+  // Lenis animates its own scroll position, so ScrollTrigger must read from
+  // Lenis's frame rather than native scroll events, or scrubbed timelines
+  // lag a frame behind and visibly jitter. Driving lenis.raf from gsap.ticker
+  // keeps both on one clock; lagSmoothing(0) stops GSAP from swallowing
+  // frames during heavy canvas work and desyncing the two.
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lenis = null;
+  if (window.Lenis && !prefersReduced) {
+    lenis = new Lenis({
+      duration: 1.1,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 1.6
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(time => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+    window.__lenis = lenis; // handy for debugging / programmatic scrolling
+  }
+
+  // Anchor navigation has to go through Lenis, otherwise a native jump
+  // desyncs it from the position it thinks it's at.
+  function scrollToTarget(hash) {
+    if (hash === '#' || hash === '') {
+      lenis ? lenis.scrollTo(0) : window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    const el = document.querySelector(hash);
+    if (!el) return;
+    lenis ? lenis.scrollTo(el) : el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  /* ---------- intro timeline ---------- */
+  gsap.set('.hero-name .ch', { yPercent: 120, opacity: 0 });
+  const introTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  introTl
+    .to('.guide.anim', { scaleY: 1, duration: 1.1, stagger: 0.1 }, 0)
+    .to('.hero-name .ch', { yPercent: 0, opacity: 1, duration: 1.1, stagger: 0.045, ease: 'power4.out' }, 0.2)
+    .to('.hero-lines .bar', { scaleX: 1, duration: 1.1 }, 0.5)
+    .to('.hero-meta span', { y: 0, duration: 0.8 }, 0.7)
+    .to('.pill-available', { opacity: 1, scale: 1, duration: 0.7, ease: 'back.out(1.7)' }, 0.9)
+    // Type the pill copy in behind the blinking caret; the pill grows around it.
+    .call(typePill, null, 1.5);
+
+  function typePill() {
+    const el = document.querySelector('.pill-available .type');
+    if (!el) return;
+    const copy = 'Turning ad spend into enrollments.';
+    let i = 0;
+    const id = setInterval(() => {
+      el.textContent = copy.slice(0, ++i);
+      if (i >= copy.length) clearInterval(id);
+    }, 55);
+  }
+
+  /* ---------- portrait reveal (scroll-driven) ---------- */
+  gsap.to('#portraitStage', {
+    y: 0, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+  gsap.to('#scribble', {
+    clipPath: 'inset(0 0% 0 0)', ease: 'none',
+    scrollTrigger: { trigger: '.roles', start: 'top bottom', end: 'top center', scrub: true }
+  });
+  // Mobile-only cream veil lifts as the portrait rises.
+  gsap.to('.mobile-cream', {
+    opacity: 0, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+
+  /* ---------- column curtain wipes ---------- */
+  // Cream columns retract upward in sequence, revealing the yellow stage behind.
+  gsap.to('.strip .col', {
+    scaleY: 0, ease: 'none', stagger: 0.12,
+    scrollTrigger: { trigger: '.strip', start: 'top 95%', end: 'bottom 45%', scrub: true }
+  });
+  gsap.to('.footer .fcols .col', {
+    scaleY: 0, ease: 'none', stagger: 0.12,
+    scrollTrigger: { trigger: '.footer', start: 'top 95%', end: 'top 25%', scrub: true }
+  });
+
+  /* ---------- role pills ---------- */
+  gsap.to('.roles .tag', {
+    opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
+    scrollTrigger: { trigger: '.roles', start: 'top 60%' }
+  });
+
+  /* ---------- dark section quote ---------- */
+  gsap.to('.dark-quote .w span', {
+    y: 0, duration: 1, stagger: 0.08, ease: 'power4.out',
+    scrollTrigger: { trigger: '.dark-sec', start: 'top 30%' }
+  });
+
+  /* ---------- designing experiences (scrubbed timeline) ---------- */
+  const designTl = gsap.timeline({
+    scrollTrigger: { trigger: '.design-sec', start: 'top top', end: 'bottom bottom', scrub: 0.6 }
+  });
+  designTl
+    .to('.design-lead .w span', { y: 0, opacity: 1, duration: 1, stagger: 0.06 })
+    .to('.design-big .ch', { y: 0, opacity: 1, duration: 1, stagger: 0.02 }, '-=0.4')
+    .fromTo('#designWipe', { yPercent: 0, y: 0 }, { yPercent: -100, y: 0, duration: 1.2, ease: 'power2.inOut' }, '<0.2')
+    .fromTo('.design-frame .shot', { scale: 1.15 }, { scale: 1, duration: 1.4, ease: 'power2.out' }, '<')
+    .to({}, { duration: 1 });
+
+  /* ---------- design frame custom hover cursor ---------- */
+  const frame = document.getElementById('designFrame');
+  const dCursor = document.getElementById('designCursor');
+  if (frame && dCursor) {
+    frame.addEventListener('mouseenter', () => { cursor.style.opacity = 0; gsap.to(dCursor, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.7)' }); });
+    frame.addEventListener('mouseleave', () => { cursor.style.opacity = 1; gsap.to(dCursor, { opacity: 0, scale: 0, duration: 0.3 }); });
+    frame.addEventListener('mousemove', e => {
+      const r = frame.getBoundingClientRect();
+      dCursor.style.left = (e.clientX - r.left) + 'px';
+      dCursor.style.top = (e.clientY - r.top) + 'px';
+    });
+  }
+
+  /* ---------- section headings (Skills, Experience) ---------- */
+  // Two .works-head blocks now, so trigger each on its own scroll position.
+  document.querySelectorAll('.works-head').forEach(head => {
+    gsap.to(head.querySelectorAll('h2 .ch'), {
+      y: 0, duration: 1, stagger: 0.03, ease: 'power4.out',
+      scrollTrigger: { trigger: head, start: 'top 78%' }
+    });
+    const p = head.querySelector('p');
+    if (p) gsap.to(p, {
+      opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+      scrollTrigger: { trigger: head, start: 'top 62%' }
+    });
+  });
+
+  /* ---------- dark section "worked at" strip ---------- */
+  gsap.timeline({ scrollTrigger: { trigger: '.dark-sec', start: 'top 20%' } })
+    .to('.worked-label', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.3)
+    .to('.worked-mark, .worked-dot', { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out' }, 0.4);
+
+  /* ---------- skills & tools: stamp-in ---------- */
+  document.querySelectorAll('.taggroup').forEach(group => {
+    const tl = gsap.timeline({ scrollTrigger: { trigger: group, start: 'top 80%' } });
+    tl.to(group.querySelectorAll('.taggroup-label .ch'), { y: 0, duration: 0.7, stagger: 0.03, ease: 'power4.out' })
+      .to(group.querySelectorAll('.stamp'), {
+        opacity: 1, scale: 1, rotate: 0, duration: 0.5,
+        stagger: 0.035, ease: 'back.out(1.7)'
+      }, '-=0.3');
+  });
+
+  /* ---------- experience ledger ---------- */
+  document.querySelectorAll('.ledger-row').forEach(row => {
+    const tl = gsap.timeline({ scrollTrigger: { trigger: row, start: 'top 80%' } });
+    tl.to(row.querySelector('.ledger-line'), { scaleY: 1, duration: 0.8, ease: 'power3.inOut' })
+      .to(row.querySelector('.ledger-date-in'), { y: 0, duration: 0.7, ease: 'power4.out' }, '-=0.5')
+      .to(row.querySelectorAll('.ledger-role .ch'), { y: 0, duration: 0.7, stagger: 0.02, ease: 'power4.out' }, '-=0.5')
+      .to(row.querySelectorAll('.ledger-company, .ledger-logo'), { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+      .to(row.querySelectorAll('.ledger-points li'), { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power3.out' }, '-=0.3');
+  });
+
+  /* ---------- footer reveals ---------- */
+  gsap.to('.footer-divider .h', {
+    scaleX: 1, duration: 1.1, ease: 'power3.inOut',
+    scrollTrigger: { trigger: '.footer-cta', start: 'top 85%' }
+  });
+  const footTl = gsap.timeline({ scrollTrigger: { trigger: '.footer-cta', start: 'top 75%' } });
+  footTl
+    .to('.footer-cta .lead .ch', { y: 0, duration: 0.9, stagger: 0.02, ease: 'power4.out' })
+    .to('.footer-cta .big .ch', { y: 0, duration: 0.9, stagger: 0.02, ease: 'power4.out' }, '-=0.6')
+    .to('.reach-label .ch', { y: 0, duration: 0.8, stagger: 0.03, ease: 'power4.out' }, '-=0.7')
+    .to('.footer-credit p', { opacity: 0.6, y: 0, duration: 0.8, stagger: 0.1 }, '-=0.3');
+
+  /* ---------- floating menu ---------- */
+  // xPercent (not x:'-50%'): GSAP parses the CSS translateX(-50%) into `x` as
+  // pixels, so passing x:'-50%' stacks a second offset and pushes the menu a
+  // full width off-centre. xPercent owns the centring, x:0 clears the px channel.
+  gsap.set('#menu', { xPercent: -50, x: 0 });
+  gsap.to('#menu', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 1.4 });
+  const menu = document.getElementById('menu');
+  document.getElementById('menuBar').addEventListener('click', () => menu.classList.toggle('open'));
+  document.querySelectorAll('.menu-links a').forEach(a =>
+    a.addEventListener('click', e => {
+      const hash = a.getAttribute('href') || '';
+      if (hash.startsWith('#')) {
+        e.preventDefault();
+        scrollToTarget(hash);
+      }
+      menu.classList.remove('open');
+    })
+  );
+
+  window.addEventListener('load', () => ScrollTrigger.refresh());
+})();
+</script>
+</body>
+</html>
