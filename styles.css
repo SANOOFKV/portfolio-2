@@ -183,20 +183,22 @@ main{position:relative}
   .hero-title-group{padding-top:12vh;margin-bottom:26vh}
   .hero .pill-available{top:32px}
 }
-.hero-name{white-space:nowrap;text-align:center}
+.hero-name{
+  white-space:nowrap;text-align:center;
+  display:flex;flex-direction:column;align-items:center;
+}
 .hero-name .line{display:flex;justify-content:center}
 .hero-name .ch{
   font-family:var(--display);font-size:15.8vw;line-height:.92;
   letter-spacing:-.03em;color:var(--ink);display:inline-block;white-space:pre;
 }
 .hero-name .mask{display:inline-block;overflow:hidden}
-/* Name and the label row stack vertically. */
-.hero-title-group{flex-direction:column}
-/* Label row below the name: spans guide to guide, a connecting line running
-   out to each guide and the two labels meeting near the centre. */
+/* Label row lives in the clear band between the two name lines: full width so
+   the connecting lines reach out toward the guides, labels meeting near centre.
+   Small vertical margin keeps them off the cap edges above and below. */
 .hero-meta-row{
-  display:flex;align-items:center;width:90%;
-  margin-top:clamp(24px,4vh,52px);gap:clamp(28px,6vw,120px);
+  display:flex;align-items:center;width:100%;
+  gap:clamp(28px,6vw,120px);margin:clamp(6px,1.1vh,16px) 0;
 }
 .hero-lines{flex:1;display:flex;align-items:center;min-width:0}
 .hero-lines .bar{flex:1;height:1px;background:var(--line);transform:scaleX(0)}

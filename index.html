@@ -93,22 +93,25 @@
     <div class="grid-bg"></div>
     <div class="pill-available" id="pillAvailable"><span class="type"></span><span class="caret"></span></div>
     <div class="hero-title-group">
-      <h1 class="hero-name" id="heroName">
+      <!-- The label row sits in the clear band BETWEEN the two name lines
+           (all-caps, no descenders, so that band is empty of glyphs).
+           aria-label keeps the heading readable despite the interleaved row;
+           the row itself is aria-hidden so it isn't announced twice. -->
+      <h1 class="hero-name" id="heroName"
+          aria-label="Sanoof Padikkal — Performance Marketer, Kerala, India">
         <span class="line" data-chars="SANOOF"></span>
+        <div class="hero-meta-row" aria-hidden="true">
+          <div class="hero-lines left">
+            <div class="bar"></div>
+            <div class="hero-meta"><span>Performance Marketer</span></div>
+          </div>
+          <div class="hero-lines right">
+            <div class="hero-meta"><span>Kerala, India</span></div>
+            <div class="bar"></div>
+          </div>
+        </div>
         <span class="line" data-chars="PADIKKAL"></span>
       </h1>
-      <!-- Labels sit BELOW the name: the wide Zodiak name fills the width edge
-           to edge, leaving no side channel for a flanking label. -->
-      <div class="hero-meta-row">
-        <div class="hero-lines left">
-          <div class="bar"></div>
-          <div class="hero-meta"><span>Performance Marketer</span></div>
-        </div>
-        <div class="hero-lines right">
-          <div class="hero-meta"><span>Kerala, India</span></div>
-          <div class="bar"></div>
-        </div>
-      </div>
     </div>
   </section>
 
