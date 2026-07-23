@@ -190,32 +190,33 @@ main{position:relative}
   letter-spacing:-.03em;color:var(--ink);display:inline-block;white-space:pre;
 }
 .hero-name .mask{display:inline-block;overflow:hidden}
-.hero-lines{position:absolute;display:flex;align-items:center;top:50%}
-.hero-lines.left{left:5%;right:50%;margin-right:230px}
-.hero-lines.right{right:5%;left:50%;margin-left:230px}
+/* Name and the label row stack vertically. */
+.hero-title-group{flex-direction:column}
+/* Label row below the name: spans guide to guide, a connecting line running
+   out to each guide and the two labels meeting near the centre. */
+.hero-meta-row{
+  display:flex;align-items:center;width:90%;
+  margin-top:clamp(24px,4vh,52px);gap:clamp(28px,6vw,120px);
+}
+.hero-lines{flex:1;display:flex;align-items:center;min-width:0}
 .hero-lines .bar{flex:1;height:1px;background:var(--line);transform:scaleX(0)}
 .hero-lines.left .bar{transform-origin:left}
 .hero-lines.right .bar{transform-origin:right;background:var(--line-soft)}
-.hero-meta{font-size:14px;color:var(--gray);white-space:nowrap;overflow:hidden}
+.hero-meta{font-size:clamp(13px,1vw,16px);color:var(--gray);white-space:nowrap;overflow:hidden}
 .hero-lines.left .hero-meta{padding-left:20px}
 .hero-lines.right .hero-meta{padding-right:20px}
 .hero-meta span{display:inline-block;transform:translateY(110%)}
 @media(max-width:768px){
-  .hero-lines{display:none}
+  .hero-meta-row{display:none}
   .hero-title-group{margin-bottom:20vh}
   /* 17vw, not 22vw: Zodiak is wider than the previous face and "PADIKKAL"
      overflowed the 16px mobile guide rails, clipping its first/last letter. */
   .hero-name .ch{font-size:17vw}
 }
-/* Zodiak runs wider than the previous stand-in face. Between 769–1000px the
-   name crowds the guide lines AND the label rail (45vw − 230px, which does not
-   scale with font-size) becomes too narrow for "Digital Marketing Executive".
-   Shrink the name and pull the rails inward so both always fit. */
+/* Zodiak is wide; between 769–1000px the full-size name crowds the guide
+   lines, so ease it down a little. */
 @media(min-width:769px) and (max-width:1000px){
   .hero-name .ch{font-size:13vw}
-  .hero-lines.left{margin-right:130px}
-  .hero-lines.right{margin-left:130px}
-  .hero-meta{font-size:12px}
 }
 
 /* column transition strip */
