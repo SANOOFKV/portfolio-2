@@ -265,14 +265,19 @@
   // lag a frame behind and visibly jitter. Driving lenis.raf from gsap.ticker
   // keeps both on one clock; lagSmoothing(0) stops GSAP from swallowing
   // frames during heavy canvas work and desyncing the two.
-  // REDUCED already returned early above, so only the availability check remains.
+  //
+  // Touch devices are DELIBERATELY excluded. iOS Safari's momentum scrolling
+  // is already smooth and fights any JS scroll library — running Lenis there
+  // feels laggy and rubber-bandy. Skipping it lets native scroll handle touch;
+  // ScrollTrigger falls back to its own native scroll listener automatically,
+  // so all the scroll animations keep working. REDUCED already returned above.
+  const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
   let lenis = null;
-  if (window.Lenis) {
+  if (window.Lenis && !isTouch) {
     lenis = new Lenis({
       duration: 1.1,
       easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      touchMultiplier: 1.6
+      smoothWheel: true
     });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(time => lenis.raf(time * 1000));
