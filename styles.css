@@ -291,15 +291,15 @@ main{position:relative}
 @media(max-width:768px){.worked-dot{display:none}}
 
 /* dashboard placeholder in the "what I do" frame */
-.design-frame .ph-dash{
+.approach-frame .ph-dash{
   flex-direction:column;gap:10px;padding:0 18px;text-align:center;
   background:linear-gradient(135deg,#242424,#3a3a3a);color:var(--cream);
 }
-.design-frame .shot .ph-metric{
+.approach-frame .shot .ph-metric{
   font-family:var(--display);font-size:clamp(36px,6vw,72px);
   letter-spacing:-.03em;line-height:1;color:var(--yellow);
 }
-.design-frame .shot .ph-sub{
+.approach-frame .shot .ph-sub{
   font-family:var(--sans);font-size:clamp(11px,1.2vw,15px);
   letter-spacing:.08em;text-transform:uppercase;color:rgba(247,241,237,.55);
   /* splits the caption evenly instead of orphaning the last word */
@@ -307,41 +307,41 @@ main{position:relative}
 }
 
 /* ===========================================================
-   "DESIGNING EXPERIENCES" SECTION
+   "APPROACH — WHAT I DO" SECTION
    =========================================================== */
-.design-sec{position:relative;z-index:10;height:450vh}
-.design-sec .pin{
+.approach{position:relative;z-index:10;height:450vh}
+.approach .pin{
   position:sticky;top:0;height:100vh;width:100%;
   background:var(--cream);display:flex;flex-direction:column;
 }
 .brush{position:relative;z-index:1;width:100%;height:70px;overflow:hidden}
 .brush svg{width:100%;height:100%}
-.design-row{
+.approach-row{
   position:relative;flex:1;display:flex;align-items:center;
   gap:5vw;padding:0 5vw;
 }
-.design-text{display:flex;flex-direction:column;align-items:flex-end;flex:1}
-.design-lead{
+.approach-text{display:flex;flex-direction:column;align-items:flex-end;flex:1}
+.approach-lead{
   color:var(--ink);font-size:clamp(16px,1.6vw,24px);line-height:1.2;
   display:flex;flex-wrap:wrap;justify-content:flex-end;gap:0 .25em;
   letter-spacing:-.02em;margin-bottom:6vh;max-width:32ch;
 }
-.design-lead .w{display:inline-block;overflow:hidden}
-.design-lead .w span{display:inline-block;transform:translateY(100%);opacity:0}
-.design-big{display:flex;flex-direction:column;align-items:flex-end}
-.design-big .row{display:inline-flex;overflow:hidden;margin-bottom:.15em;padding-right:1%}
-.design-big .ch{
+.approach-lead .w{display:inline-block;overflow:hidden}
+.approach-lead .w span{display:inline-block;transform:translateY(100%);opacity:0}
+.approach-big{display:flex;flex-direction:column;align-items:flex-end}
+.approach-big .row{display:inline-flex;overflow:hidden;margin-bottom:.15em;padding-right:1%}
+.approach-big .ch{
   font-family:var(--display);font-size:clamp(34px,4.4vw,64px);
   line-height:1;letter-spacing:-.03em;text-transform:uppercase;color:var(--ink);
   display:inline-block;white-space:pre;transform:translateY(100%);opacity:0;
 }
-.design-visual{flex:1;display:flex;align-items:center;justify-content:center}
-.design-frame{
+.approach-visual{flex:1;display:flex;align-items:center;justify-content:center}
+.approach-frame{
   position:relative;overflow:hidden;border-radius:16px;
   width:min(100%,42vw);aspect-ratio:3/2;border:1px solid #BCBCBC;cursor:none;
 }
-.design-frame .shot{width:100%;height:100%;transform:scale(1.15);transform-origin:center}
-.design-frame .shot .ph{
+.approach-frame .shot{width:100%;height:100%;transform:scale(1.15);transform-origin:center}
+.approach-frame .shot .ph{
   width:100%;height:100%;
   /* Ink, not the old rust placeholder — red was the only off-palette colour on
      the site. Sits under the yellow wipe for a high-contrast reveal. */
@@ -350,42 +350,42 @@ main{position:relative}
   color:var(--cream);font-family:var(--display);font-size:2vw;letter-spacing:.1em;
 }
 /* Covers the image until the scrub timeline slides it up (GSAP drives yPercent). */
-.design-frame .wipe{position:absolute;inset:0;background:var(--yellow)}
-.design-cursor{
+.approach-frame .wipe{position:absolute;inset:0;background:var(--yellow)}
+.approach-cursor{
   position:absolute;top:0;left:0;z-index:10;pointer-events:none;
   width:160px;height:160px;border-radius:50%;background:rgba(0,0,0,.7);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   color:#fff;text-align:center;opacity:0;transform:scale(0) translate(-50%,-50%);
 }
-.design-cursor span{font-size:16px;line-height:1.2}
+.approach-cursor span{font-size:16px;line-height:1.2}
 @media(max-width:768px){
   /* align-items:center is inherited from the desktop row; in this column layout
      it shrink-wraps the children to content width, squeezing the image frame.
      stretch lets both columns use the full width. */
-  .design-row{flex-direction:column;gap:28px;justify-content:center;align-items:stretch}
+  .approach-row{flex-direction:column;gap:28px;justify-content:center;align-items:stretch}
   /* flex:1 is inherited from the desktop two-column layout; stacked, it gives
      each block an equal half of the height and centres content inside, opening
      a dead gap in the middle. flex:none keeps the group compact and centred. */
-  .design-text,.design-visual{flex:none}
-  .design-text{align-items:center}
-  .design-lead{justify-content:center}
-  .design-big{align-items:center}
-  .design-frame{width:calc(100% - 48px);margin:0 auto}
-  .design-frame .ph-sub{font-size:10px;letter-spacing:.04em}
+  .approach-text,.approach-visual{flex:none}
+  .approach-text{align-items:center}
+  .approach-lead{justify-content:center}
+  .approach-big{align-items:center}
+  .approach-frame{width:calc(100% - 48px);margin:0 auto}
+  .approach-frame .ph-sub{font-size:10px;letter-spacing:.04em}
 }
 
 /* ===========================================================
    CURATED PROJECTS
    =========================================================== */
-.works{position:relative;z-index:10;background:var(--cream);width:100%}
-.works-head{display:flex;flex-direction:column;align-items:center;padding:10vh 5% 8vh}
-.works-head h2{
+.skills-sec{position:relative;z-index:10;background:var(--cream);width:100%}
+.section-head{display:flex;flex-direction:column;align-items:center;padding:10vh 5% 8vh}
+.section-head h2{
   font-family:var(--display);text-transform:uppercase;text-align:center;
   font-size:clamp(32px,5vw,56px);line-height:1;letter-spacing:-.03em;
 }
-.works-head h2 .mask{display:inline-flex;overflow:hidden;flex-wrap:wrap;padding:0 4px}
-.works-head h2 .ch{display:inline-block;white-space:pre;transform:translateY(100%)}
-.works-head p{
+.section-head h2 .mask{display:inline-flex;overflow:hidden;flex-wrap:wrap;padding:0 4px}
+.section-head h2 .ch{display:inline-block;white-space:pre;transform:translateY(100%)}
+.section-head p{
   text-align:center;font-size:clamp(16px,1.4vw,24px);line-height:1.3;
   margin-top:2rem;max-width:784px;opacity:0;transform:translateY(20px);letter-spacing:-.02em;
 }

@@ -240,13 +240,13 @@
      =========================================================== */
   function revealAll() {
     document.querySelectorAll(
-      '.ch,.w span,.tag,.pill-available,.works-head p,.footer-credit p,.menu,.hero-meta span,.bar,.h,.guide.anim,.stamp,.ledger-line,.ledger-date-in,.ledger-company,.ledger-logo,.ledger-points li,.worked-label,.worked-mark,.worked-dot'
+      '.ch,.w span,.tag,.pill-available,.section-head p,.footer-credit p,.menu,.hero-meta span,.bar,.h,.guide.anim,.stamp,.ledger-line,.ledger-date-in,.ledger-company,.ledger-logo,.ledger-points li,.worked-label,.worked-mark,.worked-dot'
     ).forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
     document.getElementById('portraitStage').style.transform = 'translateY(0)';
     document.getElementById('scribble').style.clipPath = 'inset(0 0 0 0)';
     document.getElementById('menu').style.transform = 'translateX(-50%)';
     document.querySelectorAll('.mobile-cream').forEach(el => { el.style.opacity = 0; });
-    const wipe = document.getElementById('designWipe');
+    const wipe = document.getElementById('approachWipe');
     if (wipe) wipe.style.transform = 'translateY(-100%)';
     const pt = document.querySelector('.pill-available .type');
     if (pt) pt.textContent = 'Turning ad spend into enrollments.';
@@ -355,18 +355,18 @@
 
   /* ---------- designing experiences (scrubbed timeline) ---------- */
   const designTl = gsap.timeline({
-    scrollTrigger: { trigger: '.design-sec', start: 'top top', end: 'bottom bottom', scrub: 0.6 }
+    scrollTrigger: { trigger: '.approach', start: 'top top', end: 'bottom bottom', scrub: 0.6 }
   });
   designTl
-    .to('.design-lead .w span', { y: 0, opacity: 1, duration: 1, stagger: 0.06 })
-    .to('.design-big .ch', { y: 0, opacity: 1, duration: 1, stagger: 0.02 }, '-=0.4')
-    .fromTo('#designWipe', { yPercent: 0, y: 0 }, { yPercent: -100, y: 0, duration: 1.2, ease: 'power2.inOut' }, '<0.2')
-    .fromTo('.design-frame .shot', { scale: 1.15 }, { scale: 1, duration: 1.4, ease: 'power2.out' }, '<')
+    .to('.approach-lead .w span', { y: 0, opacity: 1, duration: 1, stagger: 0.06 })
+    .to('.approach-big .ch', { y: 0, opacity: 1, duration: 1, stagger: 0.02 }, '-=0.4')
+    .fromTo('#approachWipe', { yPercent: 0, y: 0 }, { yPercent: -100, y: 0, duration: 1.2, ease: 'power2.inOut' }, '<0.2')
+    .fromTo('.approach-frame .shot', { scale: 1.15 }, { scale: 1, duration: 1.4, ease: 'power2.out' }, '<')
     .to({}, { duration: 1 });
 
   /* ---------- design frame custom hover cursor ---------- */
-  const frame = document.getElementById('designFrame');
-  const dCursor = document.getElementById('designCursor');
+  const frame = document.getElementById('approachFrame');
+  const dCursor = document.getElementById('approachCursor');
   if (frame && dCursor) {
     frame.addEventListener('mouseenter', () => { cursor.style.opacity = 0; gsap.to(dCursor, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.7)' }); });
     frame.addEventListener('mouseleave', () => { cursor.style.opacity = 1; gsap.to(dCursor, { opacity: 0, scale: 0, duration: 0.3 }); });
@@ -378,8 +378,8 @@
   }
 
   /* ---------- section headings (Skills, Experience) ---------- */
-  // Two .works-head blocks now, so trigger each on its own scroll position.
-  document.querySelectorAll('.works-head').forEach(head => {
+  // Two .section-head blocks now, so trigger each on its own scroll position.
+  document.querySelectorAll('.section-head').forEach(head => {
     gsap.to(head.querySelectorAll('h2 .ch'), {
       y: 0, duration: 1, stagger: 0.03, ease: 'power4.out',
       scrollTrigger: { trigger: head, start: 'top 78%' }
