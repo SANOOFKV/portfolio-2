@@ -209,7 +209,15 @@ main{position:relative}
 .hero-lines.right .hero-meta{padding-right:20px}
 .hero-meta span{display:inline-block;transform:translateY(110%)}
 @media(max-width:768px){
-  .hero-meta-row{display:none}
+  /* Same "between the lines" band as desktop, just far tighter: no connecting
+     bars (no width budget for them at 17vw name size) and a much smaller,
+     tightly-margined label pair so it clears the caps above and below. */
+  .hero-meta-row{gap:12px;margin:2px 0;justify-content:center}
+  .hero-lines{flex:none}
+  .hero-lines .bar{display:none}
+  .hero-meta{font-size:10px;letter-spacing:.02em}
+  .hero-lines.left .hero-meta{padding-left:0}
+  .hero-lines.right .hero-meta{padding-right:0}
   .hero-title-group{margin-bottom:20vh}
   /* 17vw, not 22vw: Zodiak is wider than the previous face and "PADIKKAL"
      overflowed the 16px mobile guide rails, clipping its first/last letter. */
