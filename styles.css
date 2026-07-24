@@ -494,6 +494,16 @@ main{position:relative}
   font-family:var(--display);font-size:clamp(90px,15vw,150px);line-height:1;
   letter-spacing:-.03em;color:var(--ink);white-space:pre;
 }
+/* The 90px floor above was sized for desktop's 15vw crossover point. Below
+   that, at phone widths, 15vw already resolves under 90px, so it clamps to a
+   fixed 90px regardless of viewport — with Zodiak's wide metrics, "PADIKKAL"
+   at 90px is ~473px against an ~85%-width container of ~290px, overflowing
+   and getting invisibly clipped by overflow-x:clip. Result: it reads as
+   squashed/collapsed rather than a clean oversized watermark. Rescale to
+   actually fit the container at every phone width. */
+@media(max-width:768px){
+  .footer-watermark .ch{font-size:clamp(34px,10vw,76px)}
+}
 .footer-blob{position:relative;z-index:5;width:clamp(259px,32vw,560px);height:clamp(285px,45vh,760px)}
 .footer-blob canvas{width:100%;height:100%}
 .footer-divider{position:relative;z-index:3;display:flex;width:100%;height:1px}
