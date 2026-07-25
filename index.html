@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- data-theme="dark" is the default. To revert to the original cream look,
+     change this to data-theme="light" (both palettes live in styles.css). -->
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +11,7 @@
 <!-- ICONS -->
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<meta name="theme-color" content="#f7f1ed">
+<meta name="theme-color" content="#161616">
 
 <!-- SOCIAL SHARE (Open Graph + Twitter).
      og:url / og:image MUST stay absolute — LinkedIn, WhatsApp and Facebook fetch
@@ -148,7 +150,10 @@
   <!-- ===================== APPROACH — WHAT I DO ===================== -->
   <section class="approach">
     <div class="pin">
-      <div class="brush"><img src="assets/brush.png" alt=""></div>
+      <!-- brush.png is used as a MASK (its alpha defines the stroke shape) so the
+           colour follows the theme via --panel — dark section dripping onto the
+           page bg in both themes, no second asset. -->
+      <div class="brush" role="presentation"></div>
       <div class="approach-row">
         <div class="approach-text">
           <p class="approach-lead" data-words="Turning ad spend into results through"></p>
