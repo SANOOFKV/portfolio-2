@@ -613,6 +613,31 @@ main{position:relative}
 .footer-credit b{font-weight:700}
 
 /* ===========================================================
+   THEME TOGGLE
+   Sits beside the floating Menu pill. Sun icon in dark mode
+   (tap to go light), moon in light mode. Colours are theme vars
+   so it flips with everything else.
+   =========================================================== */
+.theme-toggle{
+  position:fixed;right:5%;bottom:40px;z-index:100;
+  width:46px;height:46px;border-radius:50%;
+  border:1px solid var(--line);background:var(--bg);color:var(--fg);
+  display:flex;align-items:center;justify-content:center;cursor:none;
+  transition:background .4s var(--ease),color .4s var(--ease),
+             border-color .4s var(--ease),transform .3s var(--ease);
+}
+.theme-toggle:hover{background:var(--fg);color:var(--bg);transform:scale(1.06)}
+.theme-toggle svg{
+  position:absolute;width:20px;height:20px;
+  transition:opacity .35s var(--ease),transform .5s var(--ease);
+}
+:root[data-theme="dark"] .theme-toggle .moon{opacity:0;transform:rotate(-90deg) scale(.4)}
+:root[data-theme="dark"] .theme-toggle .sun{opacity:1;transform:none}
+:root[data-theme="light"] .theme-toggle .sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root[data-theme="light"] .theme-toggle .moon{opacity:1;transform:none}
+@media(max-width:768px){.theme-toggle{right:16px;bottom:36px;width:42px;height:42px}}
+
+/* ===========================================================
    FLOATING MENU
    =========================================================== */
 .menu{
