@@ -27,23 +27,9 @@
      --on-panel  text sitting ON dark panels(light in BOTH themes)
    Accents (--yellow/--blue) and the yellow footer are unchanged.
 
-   Dark is the default. To REVERT to the original light look, set
-   <html data-theme="light"> (or delete the data-theme attr and make
-   :root use the light values). Both palettes live here side by side.
-   =========================================================== */
-:root,:root[data-theme="dark"]{
-  --bg:#161616;
-  --fg:#ece7e1;
-  --panel:#0e0e0e;
-  --on-panel:#f2ede7;
-  --yellow:#FFE862;
-  --blue:#37ACE8;
-  --line:#3a3a3a;
-  --line-soft:#333;
-  --gray:#9a938c;
-  --grid-line:rgba(236,231,225,.05);
-}
-:root[data-theme="light"]{
+   Light is the default. A dark palette is kept dormant below and can be
+   switched on by adding data-theme="dark" to <html>. =========== */
+:root,:root[data-theme="light"]{
   --bg:#f7f1ed;
   --fg:#242424;
   --panel:#242424;
@@ -54,6 +40,16 @@
   --line-soft:#c4bbb4;
   --gray:#636363;
   --grid-line:rgba(36,36,36,.06);
+}
+:root[data-theme="dark"]{
+  --bg:#161616;
+  --fg:#ece7e1;
+  --panel:#0e0e0e;
+  --on-panel:#f2ede7;
+  --line:#3a3a3a;
+  --line-soft:#333;
+  --gray:#9a938c;
+  --grid-line:rgba(236,231,225,.05);
 }
 :root{
   /* Fontshare stand-ins: Zodiak ≈ Trobika, Switzer ≈ Aeonik.
@@ -611,31 +607,6 @@ main{position:relative}
 }
 .footer-credit p.r{text-align:right}
 .footer-credit b{font-weight:700}
-
-/* ===========================================================
-   THEME TOGGLE
-   Sits beside the floating Menu pill. Sun icon in dark mode
-   (tap to go light), moon in light mode. Colours are theme vars
-   so it flips with everything else.
-   =========================================================== */
-.theme-toggle{
-  position:fixed;right:5%;bottom:40px;z-index:100;
-  width:46px;height:46px;border-radius:50%;
-  border:1px solid var(--line);background:var(--bg);color:var(--fg);
-  display:flex;align-items:center;justify-content:center;cursor:none;
-  transition:background .4s var(--ease),color .4s var(--ease),
-             border-color .4s var(--ease),transform .3s var(--ease);
-}
-.theme-toggle:hover{background:var(--fg);color:var(--bg);transform:scale(1.06)}
-.theme-toggle svg{
-  position:absolute;width:20px;height:20px;
-  transition:opacity .35s var(--ease),transform .5s var(--ease);
-}
-:root[data-theme="dark"] .theme-toggle .moon{opacity:0;transform:rotate(-90deg) scale(.4)}
-:root[data-theme="dark"] .theme-toggle .sun{opacity:1;transform:none}
-:root[data-theme="light"] .theme-toggle .sun{opacity:0;transform:rotate(90deg) scale(.4)}
-:root[data-theme="light"] .theme-toggle .moon{opacity:1;transform:none}
-@media(max-width:768px){.theme-toggle{right:16px;bottom:36px;width:42px;height:42px}}
 
 /* ===========================================================
    FLOATING MENU

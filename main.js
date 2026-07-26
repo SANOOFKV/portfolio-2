@@ -107,26 +107,10 @@
     cursor.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
     requestAnimationFrame(loop);
   })();
-  document.querySelectorAll('a, .menu-bar, .ico, .email-hover, .theme-toggle').forEach(el => {
+  document.querySelectorAll('a, .menu-bar, .ico, .email-hover').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('big'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
   });
-
-  /* ---------- theme toggle ----------
-     Placed before the GSAP/reduced-motion early return below so it always
-     works. The saved theme is applied pre-paint by an inline <head> script;
-     here we just flip, persist, and keep the browser-chrome tint in sync. */
-  (function () {
-    const btn = document.getElementById('themeToggle');
-    if (!btn) return;
-    const meta = document.querySelector('meta[name="theme-color"]');
-    btn.addEventListener('click', () => {
-      const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-      document.documentElement.dataset.theme = next;
-      if (meta) meta.content = next === 'light' ? '#f7f1ed' : '#161616';
-      try { localStorage.setItem('theme', next); } catch (e) {}
-    });
-  })();
 
   /* ---------- canvas: dot field (portrait stage) ---------- */
   function dotField(canvas, proxies) {
