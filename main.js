@@ -312,12 +312,34 @@
   function typePill() {
     const el = document.querySelector('.pill-available .type');
     if (!el) return;
-    const copy = 'Turning ad spend into enrollments.';
-    let i = 0;
-    const id = setInterval(() => {
-      el.textContent = copy.slice(0, ++i);
-      if (i >= copy.length) clearInterval(id);
-    }, 55);
+    const taglines = [
+      'Turning ad spend into enrollments.',
+      'Scaling Meta & Google Ads at 6× ROAS.',
+      'Available for new opportunities.'
+    ];
+    let tagIdx = 0, charIdx = 0, isDeleting = false;
+    function loop() {
+      const current = taglines[tagIdx];
+      if (isDeleting) {
+        el.textContent = current.slice(0, --charIdx);
+        if (charIdx === 0) {
+          isDeleting = false;
+          tagIdx = (tagIdx + 1) % taglines.length;
+          setTimeout(loop, 350);
+          return;
+        }
+        setTimeout(loop, 25);
+      } else {
+        el.textContent = current.slice(0, ++charIdx);
+        if (charIdx === current.length) {
+          isDeleting = true;
+          setTimeout(loop, 2400);
+          return;
+        }
+        setTimeout(loop, 45);
+      }
+    }
+    loop();
   }
 
   /* ---------- portrait reveal (scroll-driven) ---------- */
@@ -346,7 +368,6 @@
     scrollTrigger: { trigger: '.footer', start: 'top 95%', end: 'top 25%', scrub: true }
   });
 
-  /* ---------- role pills ---------- */
   /* ---------- role pills count-up ticker ---------- */
   document.querySelectorAll('.roles .tag').forEach(tag => {
     const targetVal = parseFloat(tag.getAttribute('data-count'));
@@ -374,10 +395,21 @@
     });
   });
 
-  /* ---------- dark section quote ---------- */
+  /* ---------- dark section quote reveal & yellow scroll glow ---------- */
   gsap.to('.dark-quote .w span', {
     y: 0, duration: 1, stagger: 0.08, ease: 'power4.out',
-    scrollTrigger: { trigger: '.dark-sec', start: 'top 30%' }
+    scrollTrigger: { trigger: '.dark-sec', start: 'top 35%' }
+  });
+  document.querySelectorAll('.dark-quote .w span').forEach((span, i) => {
+    gsap.to(span, {
+      color: '#FFE862',
+      scrollTrigger: {
+        trigger: '.dark-sec',
+        start: () => `top+=${i * 30} 35%`,
+        end: () => `top+=${(i + 1) * 30} 35%`,
+        scrub: true
+      }
+    });
   });
 
   /* ---------- designing experiences (scrubbed timeline) ---------- */
@@ -391,16 +423,29 @@
     .fromTo('.approach-frame .shot', { scale: 1.15 }, { scale: 1, duration: 1.4, ease: 'power2.out' }, '<')
     .to({}, { duration: 1 });
 
-  /* ---------- approach visual frame hover cursor ---------- */
+  /* ---------- approach visual frame hover cursor & 3D perspective tilt ---------- */
   const frame = document.getElementById('approachFrame');
   const dCursor = document.getElementById('approachCursor');
   if (frame && dCursor) {
-    frame.addEventListener('mouseenter', () => { cursor.style.opacity = 0; gsap.to(dCursor, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.7)' }); });
-    frame.addEventListener('mouseleave', () => { cursor.style.opacity = 1; gsap.to(dCursor, { opacity: 0, scale: 0, duration: 0.3 }); });
+    frame.parentElement.style.perspective = '1000px';
+    frame.addEventListener('mouseenter', () => {
+      cursor.style.opacity = 0;
+      gsap.to(dCursor, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.7)' });
+    });
+    frame.addEventListener('mouseleave', () => {
+      cursor.style.opacity = 1;
+      gsap.to(dCursor, { opacity: 0, scale: 0, duration: 0.3 });
+      gsap.to(frame, { rotateX: 0, rotateY: 0, duration: 0.6, ease: 'power2.out' });
+    });
     frame.addEventListener('mousemove', e => {
       const r = frame.getBoundingClientRect();
-      dCursor.style.left = (e.clientX - r.left) + 'px';
-      dCursor.style.top = (e.clientY - r.top) + 'px';
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      dCursor.style.left = x + 'px';
+      dCursor.style.top = y + 'px';
+      const rotX = ((y - r.height / 2) / (r.height / 2)) * -8;
+      const rotY = ((x - r.width / 2) / (r.width / 2)) * 8;
+      gsap.to(frame, { rotateX: rotX, rotateY: rotY, duration: 0.2, ease: 'power1.out' });
     });
   }
 
@@ -472,6 +517,16 @@
     .to('.footer-cta .big .ch', { y: 0, duration: 0.9, stagger: 0.02, ease: 'power4.out' }, '-=0.6')
     .to('.reach-label .ch', { y: 0, duration: 0.8, stagger: 0.03, ease: 'power4.out' }, '-=0.7')
     .to('.footer-credit p', { opacity: 0.6, y: 0, duration: 0.8, stagger: 0.1 }, '-=0.3');
+
+  /* ---------- footer CTA title character wave on hover ---------- */
+  const footerBig = document.querySelector('.footer-cta .big');
+  if (footerBig) {
+    footerBig.addEventListener('mouseenter', () => {
+      gsap.to('.footer-cta .big .ch', {
+        y: -12, stagger: 0.03, duration: 0.2, ease: 'power2.out', yoyo: true, repeat: 1
+      });
+    });
+  }
 
   /* ---------- magnetic physics for interactive elements ---------- */
   document.querySelectorAll('.menu-bar, .worked-mark, .ico, .email-hover, .pill-available, .stamp').forEach(el => {
