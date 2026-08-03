@@ -67,10 +67,14 @@
 <div class="cursor" id="cursor"></div>
 
 <!-- fixed guide lines -->
+<!-- custom cursor -->
+<div class="cursor" id="cursor"></div>
+
+<!-- fixed guide lines -->
 <div class="guide l static"></div>
 <div class="guide r static"></div>
-<div class="guide l anim"></div>
-<div class="guide r anim"></div>
+<div class="guide l anim"><div class="guide-bar" id="guideBarL"></div></div>
+<div class="guide r anim"><div class="guide-bar" id="guideBarR"></div></div>
 
 <!-- ===================== FIXED PORTRAIT STAGE ===================== -->
 <section class="portrait-stage" id="portraitStage">
@@ -121,9 +125,9 @@
   <!-- ===================== ROLE PILLS ===================== -->
   <section class="roles">
     <div class="inner">
-      <span class="tag">₹1Cr+ ad spend</span>
-      <span class="tag">6× avg ROAS</span>
-      <span class="tag">1.6+ yrs experience</span>
+      <span class="tag" data-count="1" data-prefix="₹" data-suffix="Cr+ ad spend">₹1Cr+ ad spend</span>
+      <span class="tag" data-count="6" data-prefix="" data-suffix="× avg ROAS">6× avg ROAS</span>
+      <span class="tag" data-count="1.6" data-prefix="" data-suffix="+ yrs experience">1.6+ yrs experience</span>
     </div>
   </section>
 
@@ -148,9 +152,6 @@
   <!-- ===================== APPROACH — WHAT I DO ===================== -->
   <section class="approach">
     <div class="pin">
-      <!-- brush.png is used as a MASK (its alpha defines the stroke shape) so the
-           colour follows the theme via --panel — dark section dripping onto the
-           page bg in both themes, no second asset. -->
       <div class="brush" role="presentation"></div>
       <div class="approach-row">
         <div class="approach-text">

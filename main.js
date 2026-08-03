@@ -347,9 +347,31 @@
   });
 
   /* ---------- role pills ---------- */
-  gsap.to('.roles .tag', {
-    opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
-    scrollTrigger: { trigger: '.roles', start: 'top 60%' }
+  /* ---------- role pills count-up ticker ---------- */
+  document.querySelectorAll('.roles .tag').forEach(tag => {
+    const targetVal = parseFloat(tag.getAttribute('data-count'));
+    const prefix = tag.getAttribute('data-prefix') || '';
+    const suffix = tag.getAttribute('data-suffix') || '';
+    if (isNaN(targetVal)) {
+      gsap.to(tag, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.roles', start: 'top 70%' } });
+      return;
+    }
+    const obj = { val: 0 };
+    gsap.to(tag, {
+      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.roles', start: 'top 70%',
+        onEnter: () => {
+          gsap.to(obj, {
+            val: targetVal, duration: 1.8, ease: 'power2.out',
+            onUpdate: () => {
+              const formatted = targetVal % 1 === 0 ? Math.round(obj.val) : obj.val.toFixed(1);
+              tag.textContent = `${prefix}${formatted}${suffix}`;
+            }
+          });
+        }
+      }
+    });
   });
 
   /* ---------- dark section quote ---------- */
@@ -369,7 +391,7 @@
     .fromTo('.approach-frame .shot', { scale: 1.15 }, { scale: 1, duration: 1.4, ease: 'power2.out' }, '<')
     .to({}, { duration: 1 });
 
-  /* ---------- design frame custom hover cursor ---------- */
+  /* ---------- approach visual frame hover cursor ---------- */
   const frame = document.getElementById('approachFrame');
   const dCursor = document.getElementById('approachCursor');
   if (frame && dCursor) {
@@ -383,7 +405,6 @@
   }
 
   /* ---------- section headings (Skills, Experience) ---------- */
-  // Two .section-head blocks now, so trigger each on its own scroll position.
   document.querySelectorAll('.section-head').forEach(head => {
     gsap.to(head.querySelectorAll('h2 .ch'), {
       y: 0, duration: 1, stagger: 0.03, ease: 'power4.out',
@@ -421,6 +442,25 @@
       .to(row.querySelectorAll('.ledger-points li'), { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power3.out' }, '-=0.3');
   });
 
+  /* ---------- footer watermark scroll parallax ---------- */
+  gsap.timeline({
+    scrollTrigger: { trigger: '.footer', start: 'top bottom', end: 'bottom top', scrub: 1 }
+  })
+  .to('.footer-watermark .line:nth-child(1) .ch', { x: 50, stagger: 0.02, ease: 'none' }, 0)
+  .to('.footer-watermark .line:nth-child(2) .ch', { x: -50, stagger: 0.02, ease: 'none' }, 0);
+
+  /* ---------- guide line scroll progress bar ---------- */
+  ScrollTrigger.create({
+    start: 0, end: 'max',
+    onUpdate: self => {
+      const p = (self.progress * 100).toFixed(1) + '%';
+      const bL = document.getElementById('guideBarL');
+      const bR = document.getElementById('guideBarR');
+      if (bL) bL.style.height = p;
+      if (bR) bR.style.height = p;
+    }
+  });
+
   /* ---------- footer reveals ---------- */
   gsap.to('.footer-divider .h', {
     scaleX: 1, duration: 1.1, ease: 'power3.inOut',
@@ -433,10 +473,20 @@
     .to('.reach-label .ch', { y: 0, duration: 0.8, stagger: 0.03, ease: 'power4.out' }, '-=0.7')
     .to('.footer-credit p', { opacity: 0.6, y: 0, duration: 0.8, stagger: 0.1 }, '-=0.3');
 
-  /* ---------- floating menu ---------- */
-  // xPercent (not x:'-50%'): GSAP parses the CSS translateX(-50%) into `x` as
-  // pixels, so passing x:'-50%' stacks a second offset and pushes the menu a
-  // full width off-centre. xPercent owns the centring, x:0 clears the px channel.
+  /* ---------- magnetic physics for interactive elements ---------- */
+  document.querySelectorAll('.menu-bar, .worked-mark, .ico, .email-hover, .pill-available, .stamp').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width / 2) * 0.25;
+      const y = (e.clientY - r.top - r.height / 2) * 0.25;
+      gsap.to(el, { x, y, duration: 0.3, ease: 'power2.out' });
+    });
+    el.addEventListener('mouseleave', () => {
+      gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
+
+  /* ---------- smart floating menu auto-hide on scroll ---------- */
   gsap.set('#menu', { xPercent: -50, x: 0 });
   gsap.to('#menu', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 1.4 });
   const menu = document.getElementById('menu');
@@ -451,6 +501,19 @@
       menu.classList.remove('open');
     })
   );
+
+  let lastScroll = 0;
+  ScrollTrigger.create({
+    onUpdate: self => {
+      const current = self.scroll();
+      if (current > lastScroll + 15 && current > 350) {
+        gsap.to('#menu', { y: 120, opacity: 0, duration: 0.4, ease: 'power2.in' });
+      } else if (current < lastScroll - 10) {
+        gsap.to('#menu', { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' });
+      }
+      lastScroll = current;
+    }
+  });
 
   window.addEventListener('load', () => ScrollTrigger.refresh());
 })();
